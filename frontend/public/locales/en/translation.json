@@ -1,0 +1,141 @@
+{
+  "appName": "SehatLink",
+  "tagline": "Offline Telemedicine for Rural Nabha",
+  "language": "Language",
+  "english": "English",
+  "punjabi": "ਪੰਜਾਬੀ",
+  "hindi": "हिंदी",
+  "actions": {
+    "speakSymptoms": "Speak Symptoms",
+    "talkToDoctor": "Talk to Doctor",
+    "findMedicine": "Find Medicine",
+    "myPrescription": "My Prescription",
+    "emergency": "Emergency",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "callAmbulance": "Call Ambulance",
+    "startConsultation": "Start Consultation",
+    "generateRx": "Generate Prescription",
+    "findPharmacies": "Find Pharmacies",
+    "recordVitals": "Assisted Intake (ASHA)",
+    "adminDashboard": "Admin Dashboard",
+    "help": "Help & Guidance"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline Mode — Data will sync when online",
+    "syncing": "Syncing pending data..."
+  },
+  "symptoms": {
+    "title": "Voice Symptom Input",
+    "instruction": "Tap the mic and speak your health concerns clearly in Punjabi, Hindi or English",
+    "listening": "Listening... Speak now",
+    "tapToSpeak": "Tap Microphone to Speak",
+    "stop": "Stop Recording",
+    "manualPlaceholder": "Or type symptoms here (e.g. chest pain, fever, cough)...",
+    "extracted": "Recognized Symptoms:",
+    "confirmPrompt": "Confirm symptoms before proceeding to triage"
+  },
+  "triage": {
+    "title": "Triage & Priority Assessment",
+    "highPriority": "HIGH PRIORITY — Urgent Care Advised",
+    "medPriority": "MEDIUM PRIORITY — Doctor Consultation Queued",
+    "lowPriority": "LOW PRIORITY — Standard Routine Care",
+    "emergencyNote": "Symptoms indicate potential red flags (e.g. chest pain / shortness of breath). Emergency referral recommended.",
+    "proceedDoctor": "Queue for Remote Doctor",
+    "callEmergency": "Call Emergency Referral"
+  },
+  "doctor": {
+    "queueTitle": "Doctor Case Queue",
+    "patientRecord": "Patient Health Record",
+    "vitals": "Recorded Vitals",
+    "startCall": "Video Consultation",
+    "audioFallback": "Audio Only Mode",
+    "rxFormTitle": "New Digital Prescription",
+    "diagnosis": "Diagnosis",
+    "medicines": "Prescribed Medications",
+    "instructions": "Follow-up Instructions"
+  },
+  "pharmacy": {
+    "title": "Pharmacy Stock & Nearest Outlets",
+    "searchPlaceholder": "Search medicine name (e.g., Paracetamol, Amoxicillin)...",
+    "inStock": "In Stock",
+    "lowStock": "Low Stock",
+    "outOfStock": "Out of Stock",
+    "reserve": "Reserve Medicine"
+  },
+  "emergency": {
+    "title": "Emergency Response",
+    "alertMessage": "Ambulance dispatcher notified with your exact village GPS location.",
+    "firstAidTitle": "Immediate First Aid Steps:"
+  },
+  "onboarding": {
+    "welcome": "Welcome to SehatLink",
+    "subtitle": "Accessible Telehealth for Everyone",
+    "fullName": "Full Name",
+    "age": "Age",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "mobile": "Mobile Number",
+    "abhaId": "ABHA Number (Optional)",
+    "createAbha": "Create ABHA Health ID",
+    "enterDetails": "Enter Patient Details"
+  },
+  "session": {
+    "loading": "Checking your secure session..."
+  },
+  "auth": {
+    "login": {
+      "heroTitle": "Healthcare closer to every village.",
+      "heroCopy": "Connect with trusted doctors, access your health records, receive prescriptions, and continue care even when connectivity is limited.",
+      "heading": "Welcome to SehatLink",
+      "subheading": "Sign in to continue your healthcare journey.",
+      "switchPrompt": "New to SehatLink?",
+      "switchAction": "Create an account",
+      "trust": {
+        "secure": "Secure healthcare access",
+        "languages": "Punjabi · हिंदी · English",
+        "ruralFirst": "Rural-first design",
+        "support": "Assisted healthcare support"
+      }
+    },
+    "signup": {
+      "heroTitle": "Join a trusted rural care network.",
+      "heroCopy": "Create your secure SehatLink account to stay connected to rural healthcare services, prescriptions, and follow-up care.",
+      "heading": "Join SehatLink",
+      "subheading": "Create your secure healthcare account.",
+      "switchPrompt": "Already have an account?",
+      "switchAction": "Sign in"
+    },
+    "roles": {
+      "badge": "Role selection",
+      "heading": "Choose how you will use SehatLink",
+      "subheading": "Authentication identifies who you are. Your SehatLink role controls which part of the system you enter. ADMIN is provisioned separately and cannot be self-assigned.",
+      "patient": {
+        "title": "Patient",
+        "description": "Consult doctors and manage your healthcare."
+      },
+      "doctor": {
+        "title": "Doctor",
+        "description": "Consult rural patients and manage appointments."
+      },
+      "healthWorker": {
+        "title": "Health Worker",
+        "description": "Assist patients in your village."
+      },
+      "pharmacist": {
+        "title": "Pharmacist",
+        "description": "Manage prescriptions and medicine availability."
+      },
+      "adminNoteTitle": "Admin access",
+      "adminNote": "Administrator access is approved separately by the SehatLink team and is not available from this screen.",
+      "cancelPrompt": "Need to return later?",
+      "skipAction": "Continue to the app"
+    }
+  }
+}

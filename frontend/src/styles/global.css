@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F5EBD8;
+    color: #333333;
+    background-image: 
+      radial-gradient(rgba(112, 123, 103, 0.08) 1px, transparent 1px),
+      radial-gradient(rgba(161, 76, 65, 0.05) 1px, #F5EBD8 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', 'Noto Serif Gurmukhi', 'Noto Serif Devanagari', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Vintage border decorative helper */
+.vintage-border {
+  position: relative;
+  border: 2px solid #324A66;
+}
+
+.vintage-border::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px solid #707B67;
+  pointer-events: none;
+}
+
+.vintage-card-shadow {
+  box-shadow: 4px 4px 0px rgba(50, 74, 102, 0.15), 0px 8px 16px rgba(0, 0, 0, 0.06);
+}
+
+.vintage-paper-texture {
+  background-color: #FAF5EC;
+  background-image: linear-gradient(180deg, rgba(245, 235, 216, 0.4) 0%, rgba(237, 228, 211, 0.4) 100%);
+}
+
+.vintage-badge {
+  font-family: 'Merriweather', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #EDE4D3;
+}
+::-webkit-scrollbar-thumb {
+  background: #707B67;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4A5340;
+}
