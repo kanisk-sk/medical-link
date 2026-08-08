@@ -1,216 +1,111 @@
 <div align="center">
 
 # 🏥 SehatLink (ਸਿਹਤ ਲਿੰਕ)
-### *Offline-First Multilingual Telemedicine & Rural AI Health Platform*
+### *Offline Telemedicine & AI Health Assistant for Rural India*
 
-![Punjab Rural Telehealth](https://img.shields.io/badge/Region-Nabha%20Tehsil%2C%20Punjab-brick?style=for-the-badge)
-![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20TypeScript%20%7C%20FastAPI%20%7C%20Groq%20AI-324A66?style=for-the-badge)
-![Offline First](https://img.shields.io/badge/Offline--First-IndexedDB%20%2B%20PWA-707B67?style=for-the-badge)
-![ABDM Compliant](https://img.shields.io/badge/Compliance-ABDM%20%2B%20DPDP%202023-C5A059?style=for-the-badge)
-
-*Designed for Smart India Hackathon — Transforming Healthcare Access in Rural India.*
+**Smart India Hackathon Prototype • Nabha Tehsil, Punjab**
 
 ---
 
 </div>
 
-## 📌 Problem Statement
+## 🌟 What is SehatLink?
 
-Rural citizens in Tehsil Nabha (Patiala District, Punjab) face severe healthcare access barriers:
-- **Low Connectivity**: Frequent internet blackouts in interior agricultural villages.
-- **Language & Literacy Barriers**: Difficulty navigating standard English digital healthcare portals.
-- **Distance to District Hospitals**: Long commutes to Civil Hospital Nabha for routine symptom checks and generic medicine availability.
-- **High Out-of-Pocket Expenses**: Lack of awareness regarding **Jan Aushadhi Kendra** generic alternatives.
+In many rural villages across India, getting medical care is a major challenge:
+- Families often have to travel **15–20 kilometers** to reach a hospital just for basic check-ups.
+- Internet connectivity in farms and interior villages is **unreliable or unavailable**.
+- Elderly villagers and low-literacy citizens struggle to type symptoms on smartphone keyboards.
+- Families spend unnecessary money on expensive branded medicines because they don't know about affordable government **Jan Aushadhi** generic medicines.
 
-**SehatLink** bridges this gap with a warm, trustworthy **Vintage Rural Healthcare UI**, **Offline-First PWA Resilience**, **Punjabi/Hindi Voice AI Triage**, and **5 Role-Specific Ecosystem Portals**.
-
----
-
-## 🎨 Unique Vintage Rural Healthcare Design Language
-
-Unlike generic corporate SaaS dashboards with dark glassmorphism and neon gradients, SehatLink is crafted with an **authentic, emotional healthcare aesthetic** inspired by old Indian Government Hospitals, Punjab Rural Clinics, and paper health records:
-
-- 📜 **Parchment & Cream Palette**: Warm Cream (`#F5EBD8` / `#FAF5EC`), Vintage Navy (`#324A66`), Terracotta Brick (`#A14C41`), Sage Olive (`#707B67`), and Vintage Gold (`#C5A059`).
-- 🩺 **Serif Headings & Paper Grain**: Classic `Merriweather` typography, double-line borders (`border-double`), serrated stamp seal badges ("ਸਿਹਤ ਸਹਾਇਕ • NABHA 2026"), and paper card textures.
-- 🌓 **Theme Dual-Mode**: Seamless toggle between **Vintage Parchment Desk** (Light) and **Vintage Night Desk** (Dark).
+**SehatLink** is an offline-first telemedicine platform designed specifically for rural healthcare. It connects village citizens, local ASHA health workers, remote doctors, and generic medicine pharmacies into one simple, trustworthy healthcare network.
 
 ---
 
-## 🚀 Core Modules & Key Features
+## 🎨 Designed for Rural Trust (No Sci-Fi Jargon)
 
-### 1. 🎤 Multilingual Voice AI Triage
-- **Speech Recognition**: Voice input in **Punjabi (ਪੰਜਾਬੀ)**, **Hindi (हिंदी)**, or **English**.
-- **Automated Symptom Extraction**: Natural language processing extracts symptoms (fever, chest tightness, cough, rash).
-- **Priority Rules Engine**: Classifies patients into **RED Emergency**, **HIGH**, **MEDIUM**, or **LOW** priority for remote doctor review.
-
-### 2. 🤖 "Sehat Sahayak AI" Assistant (Groq LLM)
-- **Groq Llama-3 Integration**: Powered by `llama-3.3-70b-versatile` running securely via FastAPI SSE streaming (**API key never exposed to frontend**).
-- **Voice Read-Aloud (Speech Synthesis)**: Audio playback in Punjabi (`pa-IN`), Hindi (`hi-IN`), or English for low-literacy citizens.
-- **Hands-Free Voice Dictation**: Microphonic speech input for asking health questions.
-- **Context-Aware Prompts**: Adapts responses based on active page route and user role.
-- **Medical Guardrails**: Answers health queries, diet suggestions (e.g. Punjabi Bajra roti, ORS), and medicine generic explanations without diagnosing or prescribing.
-
-### 3. 👥 Five Ecosystem Role Portals
-- **Patient Portal (`/patient/home`)**: Appointment scheduling, voice triage, digital e-prescriptions, QR card generator.
-- **ASHA Health Worker Portal (`/worker/dashboard`)**: Door-to-door village intake, complete vitals recording (**SpO₂, BP, Pulse, Temp, Sugar, Weight**), Punjabi voice notes, and offline sync queue management.
-- **Doctor Portal (`/doctor/dashboard`)**: Priority triage case queue, live **Video & Audio Consultation Room (`/consultation`)**, e-prescription writer with generic hints, and Civil Hospital Nabha referrals.
-- **Pharmacy Portal (`/pharmacy/dashboard`)**: Stock inventory manager, **Jan Aushadhi Generic Alternatives Guide**, medicine reservation queue, and Leaflet pharmacy map.
-- **District Admin Portal (`/admin/dashboard`)**: Nabha Tehsil analytics, **Interactive Leaflet Disease Outbreak Heatmap**, emergency 108 dispatch logs, and doctor workloads.
-
-### 4. ⚡ Offline-First Architecture (IndexedDB Dexie.js)
-- All patient registrations, vitals, appointments, and consultation requests are saved locally in **Dexie IndexedDB** (`SehatLinkRuralDB`).
-- **Animated Sync Banner**: Visual indicator tracking pending offline items and auto-syncing when internet connection restores.
-
-### 5. 💳 ABDM Digital QR Health Card
-- Generates a 14-digit ABHA QR Code with demographic info, medical history accordion, and printable/downloadable health card layout.
-
-### 6. 🚑 One-Touch Emergency 108 SOS
-- One-click emergency trigger with animated ripple effect, village GPS coordinate tracking (30.3752° N, 76.1528° E), Nabha 108 Ambulance Unit dispatch tracker, and immediate first-aid instructions.
+Unlike cold corporate tech apps with neon blue gradients and complex menus, SehatLink uses a **warm, vintage healthcare design**:
+- **Classic Paper & Clinic Look**: Warm parchment colors, wooden card borders, serif headings, and official stamp badges ("ਸਿਹਤ ਸਹਾਇਕ • NABHA 2026").
+- **Familiar & Respectful Tone**: Speaks warmly like a trusted village doctor or family physician.
+- **Easy for Everyone**: Big visual buttons, high contrast, and voice interaction so anyone can use it without prior technical knowledge.
 
 ---
 
-## 🔑 Prototype Demo Credentials
+## ✨ Key Features (How It Helps Villagers & Doctors)
 
-For quick testing without external signup:
+### 🗣️ 1. Speak Your Symptoms (Punjabi, Hindi & English)
+- Patients don't need to type! Simply tap the microphone and speak naturally in **Punjabi (ਪੰਜਾਬੀ)**, **Hindi (हिंदी)**, or **English**.
+- SehatLink automatically understands the health concern (e.g. *"I have high fever and chest tightness"*) and assigns a priority level (**Red Emergency**, **Yellow High**, or **Green Routine**).
 
-| Field | Demo Credentials |
+### 🤖 2. "Sehat Sahayak AI" Assistant
+- A friendly virtual health guide that answers questions about symptoms, diet (like warm fluids, Bajra roti, or ORS), and medicine instructions.
+- **Voice Read-Aloud**: Can read answers out loud in Punjabi or Hindi for elderly or illiterate patients.
+- **Hands-Free Dictation**: Patients can speak their questions instead of typing.
+- **Safety First**: Never gives illegal prescriptions—always guides patients to consult a certified doctor.
+
+### 📶 3. Works 100% Offline (No Internet Needed)
+- ASHA health workers visiting door-to-door in fields can record patient vitals (**Oxygen SpO₂, Blood Pressure, Heart Rate, Temperature, Sugar, Weight**) even when there is **zero mobile network**.
+- Everything is saved safely on the phone. As soon as the health worker enters an area with internet signal, all records **automatically sync** to the hospital server.
+
+### 💊 4. Jan Aushadhi Generic Medicine Finder
+- Helps villagers find low-cost, high-quality generic medicines available at government Jan Aushadhi Kendras in Nabha.
+- Displays generic equivalents (e.g., *Sorbitrate 5mg → Isosorbide Dinitrate 5mg*) saving families up to 80% on medicine bills.
+- Shows live stock availability on an interactive map.
+
+### 🚑 5. One-Touch Emergency SOS Dispatch
+- In critical situations (severe chest pain, snake bites, stroke), pressing the red **Emergency SOS** button instantly shares the exact village GPS coordinates with **Nabha 108 Ambulance Units** and alerts the nearest hospital.
+- Provides immediate, easy-to-follow first-aid steps on screen while the ambulance is on its way.
+
+### 💳 6. Digital QR Health Card (ABHA Linked)
+- Generates a personal digital Health Identity Card with a QR code containing the patient's medical history, past prescriptions, and vaccination records.
+
+---
+
+## 👥 5 Simple Role Portals
+
+| Role | What They Can Do |
 | :--- | :--- |
-| **Email** | `dummy@gmail.com` |
-| **Password** | `user12345` |
-| **Quick Action** | Click **"🚀 Enter as Dummy Patient"** or **"👨‍⚕️ Doctor Demo"** on `/login` |
+| **👩‍🌾 Patient Portal** | Speak symptoms, book remote doctor consultations, view prescriptions, and open their QR Health Card. |
+| **🩺 ASHA Health Worker** | Perform door-to-door village health checks, record clinical vitals, attach photos/voice notes, and sync offline data. |
+| **👨‍⚕️ Remote Doctor** | View incoming patient cases sorted by priority, start video/audio calls, write digital e-prescriptions, and refer urgent cases to Civil Hospital Nabha. |
+| **💊 Pharmacy Store** | Manage generic medicine stock, view reservation requests, and help patients find affordable medicine alternatives. |
+| **📊 District Admin** | View an interactive map showing disease trends across Nabha villages (like fever or Dengue outbreaks) to dispatch medical aid quickly. |
 
 ---
 
-## 🛠️ Technology Stack
+## ⏱️ How to Try the Demo (In 1 Minute)
 
-### **Frontend**
-- **Core**: React 18, TypeScript, Vite
-- **Styling**: TailwindCSS, Vanilla CSS, Custom Vintage Utility System
-- **Animation**: Framer Motion, GSAP
-- **Offline Storage**: Dexie.js (IndexedDB PWA)
-- **Maps**: Leaflet, OpenStreetMap
-- **Icons & QR**: Lucide React, QRCode.react
-- **Internationalization**: i18next, react-i18next
+### Step 1: Open the Application
+Open `http://localhost:5173` in your web browser.
 
-### **Backend**
-- **Framework**: FastAPI (Python 3.10+)
-- **AI Engine**: Groq Python SDK (`llama-3.3-70b-versatile`), Async HTTP SSE Streaming
-- **Security**: PyJWT Bearer Authentication, Password Hashing
-- **Database & Cache**: SQLAlchemy ORM, SQLite / PostgreSQL, Redis
-- **Real-Time**: WebSockets, Server-Sent Events (SSE)
+### Step 2: Use One-Click Demo Credentials
+On the Login screen, click **"🚀 Enter as Dummy Patient"** or use these test details:
+
+- **Email**: `dummy@gmail.com`
+- **Password**: `user12345`
+
+You can explore all features—speak symptoms, open the QR card, chat with the AI assistant, or switch to the Doctor and ASHA worker portals!
 
 ---
 
-## 💻 Quick Start Guide
+## 🛠️ How to Run the Project (For Evaluators)
 
-### Prerequisites
-- **Node.js**: v18+
-- **Python**: v3.10+
-
-### 1. Backend Setup
+### 1. Run the Backend
 ```bash
-# Navigate to backend folder
 cd backend
-
-# (Optional) Create and activate a virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
+python3 -m venv venv && source venv/bin/activate  # (Optional)
 pip install -r requirements.txt
-
-# Start FastAPI server on port 8000
 uvicorn app.main:app --reload --port 8000
 ```
-> Backend API: `http://localhost:8000` | Docs: `http://localhost:8000/docs`
 
-### 2. Frontend Setup
+### 2. Run the Frontend
 ```bash
-# Navigate to frontend folder
 cd frontend
-
-# Install Node modules
 npm install
-
-# Start Vite development server
 npm run dev
 ```
-> Web Application: `http://localhost:5173`
-
-### 3. (Optional) Configure Live Groq AI Key
-Add your key to `backend/.env`:
-```ini
-ENVIRONMENT=development
-DATABASE_URL=sqlite:///./sehatlink.db
-SECRET_KEY=sehatlink_secret_key_nabha_2026
-GROQ_API_KEY=gsk_your_actual_groq_api_key_here
-GROQ_MODEL=llama-3.3-70b-versatile
-```
-
----
-
-## 📁 Repository Structure
-
-```
-SehatLink/
-├── backend/
-│   ├── app/
-│   │   ├── main.py                   # FastAPI Application Entry & Router Registration
-│   │   ├── config.py                 # Application & Groq Settings
-│   │   ├── database.py               # SQLAlchemy Database Engine Setup
-│   │   ├── routers/
-│   │   │   └── assistant_router.py   # AI Assistant SSE & Prompt Endpoints
-│   │   ├── services/
-│   │   │   ├── groq_service.py       # Groq API Streaming & Offline Fallbacks
-│   │   │   └── prompt_service.py     # Rural Telemedicine System Prompts
-│   │   ├── security/
-│   │   │   └── jwt_auth.py           # JWT Authentication & Bearer Tokens
-│   │   └── schemas/
-│   │       └── assistant_schemas.py  # Pydantic Schemas
-│   ├── .env.example
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── assistant/            # Sehat Sahayak AI Floating Widget & Seals
-│   │   │   ├── maps/                 # Leaflet Pharmacy Map & Village Heatmap
-│   │   │   ├── patient/              # QR Health Card Generator
-│   │   │   ├── consultation/         # Video Call & Chat Panels
-│   │   │   └── dashboard/            # Doctor Queue & Admin Analytics Charts
-│   │   ├── pages/
-│   │   │   ├── Splash.tsx            # Vintage Landing Page
-│   │   │   ├── PatientHome.tsx       # Patient Portal
-│   │   │   ├── DoctorDashboard.tsx   # Doctor Portal
-│   │   │   ├── AssistedIntake.tsx    # ASHA Health Worker Portal
-│   │   │   ├── PharmacyPage.tsx      # Jan Aushadhi Pharmacy Portal
-│   │   │   ├── AdminDashboard.tsx    # District Analytics & Outbreak Heatmap
-│   │   │   ├── EmergencyPage.tsx     # One-Touch 108 SOS Dispatch
-│   │   │   ├── SymptomCapture.tsx    # Voice AI Symptom Input
-│   │   │   └── ConsultationPage.tsx  # Live Tele-Consultation Room
-│   │   ├── db/
-│   │   │   └── offlineDb.ts          # Dexie IndexedDB Storage
-│   │   ├── hooks/
-│   │   │   └── useAiAssistant.ts     # Speech, Audio & History Hook
-│   │   └── store/
-│   │       └── authStore.ts          # Zustand Auth Store with Demo Login
-│   ├── package.json
-│   └── tailwind.config.ts
-│
-├── .gitignore                        # Security Exclusions (Ignores .env & Keys)
-└── README.md                         # Project Documentation
-```
-
----
-
-## 📜 Compliance & Safety Standards
-
-- **ABDM (Ayushman Bharat Digital Mission)**: ABHA 14-digit digital ID linkage & e-prescription standards.
-- **India DPDP Act 2023**: Strict de-identification of rural health analytics and consent-managed data flows.
-- **Medical Disclaimer**: Sehat Sahayak AI does not issue medical diagnoses or prescriptions; all care recommendations require licensed physician review.
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ for rural healthcare empowerment in Nabha Tehsil, Punjab.</sub>
+  <sub>SehatLink — Empowering Rural Healthcare Access in Nabha Tehsil, Punjab.</sub>
 </div>
