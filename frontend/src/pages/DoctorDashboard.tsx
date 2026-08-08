@@ -6,7 +6,7 @@ import { usePatientStore } from '../store/patientStore';
 import { useConsultationStore } from '../store/consultationStore';
 import { PatientRecord as PatientRecordType, Prescription } from '../types';
 import { useNavigate } from 'react-router-dom';
-import { Stethoscope, CheckCircle2 } from 'lucide-react';
+import { Stethoscope, CheckCircle2, AlertTriangle, ShieldCheck, Filter, PhoneCall } from 'lucide-react';
 
 export const DoctorDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -14,8 +14,14 @@ export const DoctorDashboard: React.FC = () => {
   const { startCall } = useConsultationStore();
 
   const [selectedPatient, setSelectedPatient] = useState<PatientRecordType>(patientQueue[0]);
+  const [priorityFilter, setPriorityFilter] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
   const [showRxEditor, setShowRxEditor] = useState(false);
   const [rxSuccessMsg, setRxSuccessMsg] = useState('');
+
+  const filteredQueue = patientQueue.filter((p) => {
+    if (priorityFilter === 'ALL') return true;
+    return p.priority === priorityFilter;
+  });
 
   const handleSelectPatient = (patient: PatientRecordType) => {
     setSelectedPatient(patient);
@@ -40,15 +46,25 @@ export const DoctorDashboard: React.FC = () => {
       <div className="bg-denim text-white p-6 rounded-xl border-2 border-denim-dark shadow-vintage flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <span className="text-xs font-mono uppercase text-cream-light tracking-widest block">
-            DISTRICT TELEMEDICINE DASHBOARD
+            DISTRICT TELEMEDICINE DASHBOARD • NABHA TEHSIL
           </span>
-          <h1 className="text-2xl font-bold font-serif">Dr. Amanpreet Singh, MD</h1>
-          <p className="text-xs font-serif text-cream-light/80">Civil Hospital Nabha • OPD Tele-Consultation Desk</p>
+          <h1 className="text-2xl font-bold font-serif text-white">Dr. Amanpreet Singh, MD</h1>
+          <p className="text-xs font-serif text-cream-light/80">Civil Hospital Nabha • OPD Tele-Consultation & Triage Desk</p>
         </div>
 
-        <div className="flex items-center space-x-2 bg-cream/20 px-3 py-1.5 rounded-lg border border-cream/30">
-          <Stethoscope className="w-5 h-5 text-cream" />
-          <span className="text-xs font-serif font-bold text-cream">Queue Status: 3 Active Cases</span>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center space-x-2 bg-cream/20 px-3 py-1.5 rounded-lg border border-cream/30">
+            <Stethoscope className="w-5 h-5 text-vintage-gold" />
+            <span className="text-xs font-serif font-bold text-cream">Queue Status: {filteredQueue.length} Active Cases</span>
+          </div>
+
+          <button
+            onClick={() => navigate('/patient/emergency')}
+            className="px-3 py-1.5 bg-emergency-red hover:bg-red-800 text-white rounded-lg font-serif text-xs font-bold flex items-center gap-1.5 shadow-sm"
+          >
+            <PhoneCall className="w-3.5 h-3.5" />
+            <span>Emergency 108 Alert</span>
+          </button>
         </div>
       </div>
 
@@ -58,6 +74,29 @@ export const DoctorDashboard: React.FC = () => {
           <span>{rxSuccessMsg}</span>
         </div>
       )}
+
+      {/* Priority Filter Bar */}
+      <div className="flex items-center justify-between bg-parchment p-3 rounded-lg border border-parchment-dark">
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-denim" />
+          <span className="text-xs font-serif font-bold text-denim uppercase">Filter Triage Queue:</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          {(['ALL', 'HIGH', 'MEDIUM', 'LOW'] as const).map((lvl) => (
+            <button
+              key={lvl}
+              onClick={() => setPriorityFilter(lvl)}
+              className={`px-3 py-1 rounded text-xs font-serif font-bold border transition ${
+                priorityFilter === lvl
+                  ? 'bg-brick text-white border-brick-dark'
+                  : 'bg-cream-light text-charcoal border-parchment-dark hover:bg-parchment'
+              }`}
+            >
+              {lvl === 'ALL' ? 'All Priority' : lvl}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Main Grid Layout: Queue (Left) & Record (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

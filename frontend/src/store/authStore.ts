@@ -4,6 +4,8 @@ import { AppProfile, Language, SehatLinkRole } from '../types';
 
 interface AuthState {
   language: Language;
+  isDemoUser: boolean;
+  demoRole: SehatLinkRole | null;
   selectedRoleByUserId: Record<string, SehatLinkRole | undefined>;
   profilesByUserId: Record<string, AppProfile | undefined>;
   setLanguage: (lang: Language) => void;
@@ -12,12 +14,16 @@ interface AuthState {
   clearProfile: (userId: string) => void;
   getSelectedRole: (userId?: string | null) => SehatLinkRole | null;
   getProfile: (userId?: string | null) => AppProfile | null;
+  setDemoLogin: (role?: SehatLinkRole) => void;
+  clearDemoLogin: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       language: 'pa',
+      isDemoUser: false,
+      demoRole: null,
       selectedRoleByUserId: {},
       profilesByUserId: {},
       setLanguage: (language) => set({ language }),
@@ -52,24 +58,61 @@ export const useAuthStore = create<AuthState>()(
         }),
       getSelectedRole: (userId) => {
         if (!userId) {
+          if (get().isDemoUser) {
+            return get().demoRole || 'patient';
+          }
           return null;
         }
 
-        return get().selectedRoleByUserId[userId] ?? null;
+        return get().selectedRoleByUserId[userId] ?? (get().isDemoUser ? get().demoRole : null);
       },
       getProfile: (userId) => {
         if (!userId) {
+          if (get().isDemoUser) {
+            return get().profilesByUserId['demo_dummy_user'] ?? null;
+          }
           return null;
         }
 
         return get().profilesByUserId[userId] ?? null;
       },
+      setDemoLogin: (role = 'patient') => {
+        const dummyProfile: AppProfile = {
+          id: 'demo_dummy_user',
+          name: 'Gurpreet Singh (Demo Profile)',
+          phone: '+91 98765 43210',
+          role: role,
+          language: 'pa',
+          abhaId: '91-4820-1928-3741',
+          age: 60,
+          gender: 'Male',
+          village: 'Alhoran, Nabha'
+        };
+
+        set((state) => ({
+          isDemoUser: true,
+          demoRole: role,
+          profilesByUserId: {
+            ...state.profilesByUserId,
+            demo_dummy_user: dummyProfile
+          },
+          selectedRoleByUserId: {
+            ...state.selectedRoleByUserId,
+            demo_dummy_user: role
+          }
+        }));
+      },
+      clearDemoLogin: () => {
+        set({ isDemoUser: false, demoRole: null });
+      }
     }),
     {
       name: 'sehatlink-auth-store',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         language: state.language,
+        isDemoUser: state.isDemoUser,
+        demoRole: state.demoRole,
         selectedRoleByUserId: state.selectedRoleByUserId,
         profilesByUserId: state.profilesByUserId,
       }),

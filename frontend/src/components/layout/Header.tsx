@@ -68,10 +68,10 @@ export const Header: React.FC = () => {
                   <span className="text-xs font-serif text-charcoal-light">
                     Hello, <span className="font-bold text-charcoal">{user?.firstName || name.split(' ')[0] || 'friend'}</span>
                   </span>
-                  <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: 'w-9 h-9' } }} />
+                  <UserButton appearance={{ elements: { avatarBox: 'w-9 h-9' } }} />
                 </div>
                 <div className="sm:hidden">
-                  <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: 'w-9 h-9' } }} />
+                  <UserButton appearance={{ elements: { avatarBox: 'w-9 h-9' } }} />
                 </div>
               </>
             )}

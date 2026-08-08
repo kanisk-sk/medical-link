@@ -11,15 +11,23 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation();
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn: clerkSignedIn } = useAuth();
   const { user } = useUser();
-  const selectedRole = useAuthStore((state) => state.getSelectedRole(user?.id ?? null));
 
-  if (!isLoaded) {
+  const isDemoUser = useAuthStore((state) => state.isDemoUser);
+  const demoRole = useAuthStore((state) => state.demoRole);
+
+  const effectiveSignedIn = clerkSignedIn || isDemoUser;
+  const effectiveUserId = isDemoUser ? 'demo_dummy_user' : (user?.id ?? null);
+  const selectedRole = isDemoUser
+    ? (demoRole || 'patient')
+    : useAuthStore((state) => state.getSelectedRole(effectiveUserId));
+
+  if (!isLoaded && !isDemoUser) {
     return <AuthLoading />;
   }
 
-  if (!isSignedIn) {
+  if (!effectiveSignedIn) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 

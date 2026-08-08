@@ -5,8 +5,13 @@ import App from './App';
 import './i18n';
 import './styles/global.css';
 import './styles/animations.css';
+import { initOfflineData } from './db/offlineDb';
+
+// Initialize IndexedDB Dexie offline storage
+initOfflineData();
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
 
 if (!PUBLISHABLE_KEY) {
   throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY');

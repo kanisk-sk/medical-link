@@ -19,6 +19,7 @@ import { EmergencyPage } from './pages/EmergencyPage';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { HelpPage } from './pages/HelpPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { AiAssistantWidget } from './components/assistant/AiAssistantWidget';
 
 export const App: React.FC = () => {
   const protectedPage = (element: React.ReactNode) => (
@@ -68,8 +69,10 @@ export const App: React.FC = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <AiAssistantWidget />
     </Router>
   );
 };
 
 export default App;
+

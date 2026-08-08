@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { VideoPanel } from '../components/consultation/VideoPanel';
 import { ChatPanel } from '../components/consultation/ChatPanel';
 import { CallControls } from '../components/consultation/CallControls';
+import { Modal } from '../components/common/Modal';
 import { useConsultationStore } from '../store/consultationStore';
 import { usePatientStore } from '../store/patientStore';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
-import { Wifi, WifiOff, FileText } from 'lucide-react';
+import { Wifi, WifiOff, FileText, Share2, CheckCircle2, ShieldAlert } from 'lucide-react';
 
 export const ConsultationPage: React.FC = () => {
   const navigate = useNavigate();
   const { endCall, bandwidthStatus, setBandwidthStatus } = useConsultationStore();
   const { currentRecord } = usePatientStore();
 
+  const [showReferralModal, setShowReferralModal] = useState<boolean>(false);
+  const [referralSent, setReferralSent] = useState<boolean>(false);
+
   const handleEndConsult = () => {
     endCall();
-    navigate('/prescription-view');
+    navigate('/patient/prescription-view');
   };
 
   const toggleBandwidth = () => {
     setBandwidthStatus(bandwidthStatus === 'good' ? 'low' : 'good');
+  };
+
+  const handleConfirmReferral = () => {
+    setReferralSent(true);
+    setTimeout(() => {
+      setReferralSent(false);
+      setShowReferralModal(false);
+      alert('Emergency Hospital Referral transmitted to Govt Civil Hospital Nabha!');
+    }, 1500);
   };
 
   return (
@@ -28,7 +41,7 @@ export const ConsultationPage: React.FC = () => {
       <div className="bg-cream-light p-4 rounded-xl border-2 border-parchment-dark shadow-vintage flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
         <div>
           <span className="text-[10px] font-mono uppercase text-olive font-bold">
-            LIVE TELE-CONSULTATION SESSION
+            LIVE RURAL TELE-CONSULTATION SESSION • NABHA SECTOR 3
           </span>
           <h2 className="text-xl font-serif font-bold text-charcoal">
             {currentRecord?.name || 'Gurpreet Singh'} (60y, Male)
@@ -38,8 +51,17 @@ export const ConsultationPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Demo Trigger to Simulate Bandwidth Drop */}
-        <div className="flex items-center space-x-2">
+        {/* Action Controls */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            icon={<Share2 className="w-3.5 h-3.5 text-brick" />}
+            onClick={() => setShowReferralModal(true)}
+          >
+            Hospital Referral
+          </Button>
+
           <button
             onClick={toggleBandwidth}
             className={`text-xs px-3 py-1.5 rounded-lg border font-mono transition-colors ${
@@ -51,7 +73,7 @@ export const ConsultationPage: React.FC = () => {
           >
             {bandwidthStatus === 'low' ? (
               <span className="flex items-center gap-1">
-                <WifiOff className="w-3.5 h-3.5" /> 2G Mode (Video Auto-Paused)
+                <WifiOff className="w-3.5 h-3.5 text-emergency-red" /> 2G Audio Mode
               </span>
             ) : (
               <span className="flex items-center gap-1">
@@ -79,10 +101,47 @@ export const ConsultationPage: React.FC = () => {
             icon={<FileText className="w-5 h-5" />}
             onClick={handleEndConsult}
           >
-            Complete Consultation & View Prescription
+            Complete Consultation & Issue E-Prescription
           </Button>
         </div>
       </div>
+
+      {/* Referral Modal */}
+      {showReferralModal && (
+        <Modal
+          isOpen={showReferralModal}
+          onClose={() => setShowReferralModal(false)}
+          title="Issue Urgent Hospital Referral"
+        >
+          <div className="space-y-4 font-serif text-xs">
+            <div className="bg-parchment p-3 rounded-lg border border-parchment-dark">
+              <p className="font-bold text-denim">Target Facility: Government Civil Hospital, Nabha</p>
+              <p className="text-charcoal-light mt-0.5">Patient: Gurpreet Singh (60y, Male) • SpO2 88%</p>
+            </div>
+
+            {referralSent ? (
+              <div className="text-center py-4 text-success-green space-y-1">
+                <CheckCircle2 className="w-10 h-10 mx-auto animate-bounce" />
+                <p className="font-bold text-sm">Referral Transmitted to Civil Hospital Admissions!</p>
+              </div>
+            ) : (
+              <>
+                <p className="text-charcoal-light">
+                  This action will notify the trauma department and reserve an emergency bed with patient vitals pre-attached.
+                </p>
+                <div className="flex justify-end gap-2 pt-2">
+                  <Button variant="outline" size="sm" onClick={() => setShowReferralModal(false)}>
+                    Cancel
+                  </Button>
+                  <Button variant="emergency" size="sm" onClick={handleConfirmReferral}>
+                    Send Emergency Referral
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

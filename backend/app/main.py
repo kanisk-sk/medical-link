@@ -6,20 +6,30 @@ backend_dir = Path(__file__).resolve().parent.parent
 if str(backend_dir) not in sys.path:
     sys.path.insert(0, str(backend_dir))
 
+import logging
 import uuid
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+# Configure structured logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
+logger = logging.getLogger("sehatlink.main")
 
 try:
     from app.config import settings
     from app.database import engine, Base, get_db
     from app.schemas.schemas import TriageRequest, TriageResponse, EmergencyRequest
     from app.services.triage_service import analyze_triage
+    from app.routers.assistant_router import router as assistant_router
 except ImportError:
     from .config import settings
     from .database import engine, Base, get_db
     from .schemas.schemas import TriageRequest, TriageResponse, EmergencyRequest
     from .services.triage_service import analyze_triage
+    from .routers.assistant_router import router as assistant_router
 
 # Initialize database tables
 Base.metadata.create_all(bind=engine)
@@ -29,6 +39,10 @@ app = FastAPI(
     description="Offline-First Multilingual Telemedicine Platform for Nabha",
     version="1.0.0"
 )
+
+# Include AI Assistant router
+app.include_router(assistant_router)
+
 
 # Enable CORS for React frontend
 app.add_middleware(

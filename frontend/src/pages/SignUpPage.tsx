@@ -147,10 +147,57 @@ export const SignUpPage: React.FC = () => {
             transition={{ duration: 0.55, delay: 0.08 }}
           >
             <Card variant="paper" className="h-full p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
-              <div className="space-y-2 mb-6">
+              <div className="space-y-2 mb-4">
                 <h2 className="text-2xl font-bold font-serif text-charcoal">{t('auth.signup.heading')}</h2>
                 <p className="text-sm font-serif text-charcoal-light">{t('auth.signup.subheading')}</p>
               </div>
+
+              {/* Demo Account Credentials Banner for SIH Prototype */}
+              <div className="mb-4 bg-vintage-paper p-4 rounded-xl border-2 border-vintage-gold shadow-sm font-serif">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-mono font-bold text-brick uppercase tracking-wider">
+                    🔑 Prototype Demo Credentials
+                  </span>
+                  <span className="text-[10px] bg-olive/20 text-olive px-2 py-0.5 rounded font-mono font-bold">
+                    SIH 2026 Prototype
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs font-mono text-charcoal bg-warm-white p-2.5 rounded border border-parchment-dark">
+                  <div>
+                    <span className="text-[10px] text-charcoal-light block">Email:</span>
+                    <strong className="text-denim">dummy@gmail.com</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-charcoal-light block">Password:</span>
+                    <strong className="text-denim">user12345</strong>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      useAuthStore.getState().setDemoLogin('patient');
+                      navigate('/patient/home', { replace: true });
+                    }}
+                    className="flex-1 py-2.5 px-3 bg-brick hover:bg-brick-dark text-white rounded-lg text-xs font-serif font-bold shadow-sm transition active:scale-95 text-center cursor-pointer"
+                  >
+                    🚀 Enter as Dummy Patient
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      useAuthStore.getState().setDemoLogin('doctor');
+                      navigate('/doctor/dashboard', { replace: true });
+                    }}
+                    className="py-2.5 px-3 bg-denim hover:bg-denim-dark text-white rounded-lg text-xs font-serif font-bold shadow-sm transition active:scale-95 cursor-pointer"
+                  >
+                    👨‍⚕️ Doctor Demo
+                  </button>
+                </div>
+              </div>
+
 
               <div className="w-full overflow-hidden rounded-2xl border border-parchment-dark bg-warm-white shadow-vintage p-4 sm:p-5">
                 <SignUp appearance={authAppearance} />
@@ -162,6 +209,7 @@ export const SignUpPage: React.FC = () => {
                   {t('auth.signup.switchAction')}
                 </Link>
               </p>
+
             </Card>
           </motion.section>
         </div>
