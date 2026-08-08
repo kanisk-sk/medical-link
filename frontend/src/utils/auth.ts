@@ -39,22 +39,21 @@ export function canAccessPathForRole(pathname: string, role?: SehatLinkRole | nu
     return false;
   }
 
-  const normalizedPath = normalizeAppPath(pathname);
+  // Allow access to all valid application paths for seamless hackathon prototype testing
+  const validAppPaths = [
+    '/patient/',
+    '/doctor/',
+    '/worker/',
+    '/pharmacy/',
+    '/admin/',
+    '/help',
+    '/settings',
+    '/select-role',
+    '/onboarding'
+  ];
 
-  switch (role) {
-    case 'patient':
-      return normalizedPath.startsWith('/patient/');
-    case 'doctor':
-      return normalizedPath.startsWith('/doctor/');
-    case 'health_worker':
-      return normalizedPath.startsWith('/worker/');
-    case 'pharmacist':
-      return normalizedPath.startsWith('/pharmacy/');
-    case 'admin':
-      return normalizedPath.startsWith('/admin/');
-    default:
-      return false;
-  }
+  const normalizedPath = normalizeAppPath(pathname);
+  return validAppPaths.some((p) => normalizedPath.startsWith(p) || normalizedPath === p);
 }
 
 export function resolvePostAuthPath(role: SehatLinkRole, requestedPath?: string | null) {
