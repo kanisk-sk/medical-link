@@ -16,8 +16,6 @@ export const LanguageToggle: React.FC = () => {
   const languages: { code: Language; label: string }[] = [
     { code: 'en', label: 'English' },
     { code: 'ta', label: 'தமிழ்' },
-    { code: 'pa', label: 'ਪੰਜਾਬੀ' },
-    { code: 'hi', label: 'हिंदी' },
   ];
 
   return (
@@ -27,7 +25,7 @@ export const LanguageToggle: React.FC = () => {
         <button
           key={lang.code}
           onClick={() => handleLanguageChange(lang.code)}
-          className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all duration-150 ${
+          className={`px-3 py-1 rounded-md text-xs font-semibold transition-all duration-150 cursor-pointer ${
             language === lang.code
               ? 'bg-brick text-white shadow-sm font-bold'
               : 'text-charcoal-light hover:text-charcoal hover:bg-cream-light'

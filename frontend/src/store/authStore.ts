@@ -21,7 +21,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      language: 'pa',
+      language: 'en',
       isDemoUser: false,
       demoRole: null,
       selectedRoleByUserId: {},
@@ -82,7 +82,7 @@ export const useAuthStore = create<AuthState>()(
           name: 'Gurpreet Singh (Demo Profile)',
           phone: '+91 98765 43210',
           role: role,
-          language: 'pa',
+          language: 'ta',
           abhaId: '91-4820-1928-3741',
           age: 60,
           gender: 'Male',

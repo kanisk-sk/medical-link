@@ -27,57 +27,83 @@ import { SehatLinkRole } from '../types';
 
 export const Splash: React.FC = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  const [selectedRole, setSelectedRole] = useState<SehatLinkRole>('patient');
+  const { i18n } = useTranslation();
+  const isTa = i18n.language === 'ta';
 
   const rolePortals = [
     {
       role: 'patient' as SehatLinkRole,
-      title: 'ਮਰੀਜ਼ ਪੋਰਟਲ (Patient Portal)',
-      desc: 'Book tele-consultations, describe symptoms by voice, check prescription & QR card.',
+      title: isTa ? 'நோயாளி தளம் (Patient Portal)' : 'Patient Portal',
+      desc: isTa
+        ? 'மருத்துவர் ஆலோசனையைப் பெறவும், குரல் வழியில் அறிகுறிகளைக் கூறவும், மருந்துச்சீட்டுகளைப் பார்க்கவும்.'
+        : 'Book tele-consultations, describe symptoms by voice, check prescription & QR card.',
       icon: <Users className="w-6 h-6 text-brick" />,
       targetPath: '/patient/home',
-      badge: 'Citizen Access'
+      badge: isTa ? 'குடிமக்கள் அணுகல்' : 'Citizen Access'
     },
     {
       role: 'health_worker' as SehatLinkRole,
-      title: 'ਆਸ਼ਾ ਵਰਕਰ (ASHA Health Worker)',
-      desc: 'Door-to-door village intake, record vitals (SpO2, BP, Temp), sync offline queues.',
+      title: isTa ? 'ASHA சுகாதாரப் பணியாளர் (ASHA Worker)' : 'ASHA Health Worker',
+      desc: isTa
+        ? 'கிராமப்புற நேரடியாகச் சென்று உடல் அளவீடுகளைப் பதிவு செய்து இணையமற்ற முறையில் சேமிக்கவும்.'
+        : 'Door-to-door village intake, record vitals (SpO2, BP, Temp), sync offline queues.',
       icon: <HeartPulse className="w-6 h-6 text-olive" />,
       targetPath: '/worker/dashboard',
-      badge: 'Offline Intake'
+      badge: isTa ? 'இணையமற்ற பதிவு' : 'Offline Intake'
     },
     {
       role: 'doctor' as SehatLinkRole,
-      title: 'ਡਾਕਟਰ ਡੈਸ਼ਬੋਰਡ (Remote Doctor)',
-      desc: 'Review priority triage cases, conduct video consultations, issue digital prescriptions.',
+      title: isTa ? 'மருத்துவர் பலகை (Remote Doctor)' : 'Remote Doctor Dashboard',
+      desc: isTa
+        ? 'முன்னுரிமை நோயாளிகளைப் பரிசீலித்து, வீடியோ ஆலோசனைகளை வழங்கி மருந்துச்சீட்டுகளை அளிக்கவும்.'
+        : 'Review priority triage cases, conduct video consultations, issue digital prescriptions.',
       icon: <Stethoscope className="w-6 h-6 text-denim" />,
       targetPath: '/doctor/dashboard',
-      badge: 'Tele-Consultant'
+      badge: isTa ? 'தொலை மருத்துவ ஆலோசகர்' : 'Tele-Consultant'
     },
     {
       role: 'pharmacist' as SehatLinkRole,
-      title: 'ਜਨ ਔਸ਼ਧੀ ਕੇਂਦਰ (Pharmacy Portal)',
-      desc: 'Track medicine stock in Nabha, lookup generic alternatives, fulfill patient reserves.',
+      title: isTa ? 'மக்கள் மருந்தகம் (Pharmacy Portal)' : 'Jan Aushadhi Pharmacy Portal',
+      desc: isTa
+        ? 'மருந்து இருப்பைக் கண்காணித்து குறைந்த விலை மாற்று மருந்துகளை வழங்கவும்.'
+        : 'Track medicine stock, lookup generic alternatives, fulfill patient reserves.',
       icon: <Pill className="w-6 h-6 text-vintage-gold" />,
       targetPath: '/pharmacy/dashboard',
-      badge: 'Generic Stock'
+      badge: isTa ? 'குறைந்த விலை மருந்துகள்' : 'Generic Stock'
     },
     {
       role: 'admin' as SehatLinkRole,
-      title: 'ਜ਼ਿਲ੍ਹਾ ਐਡਮਿਨ (District Analytics)',
-      desc: 'Monitor village disease heatmaps, doctor stats, emergency 108 dispatch logs.',
+      title: isTa ? 'மாவட்ட சுகாதார மேலாண்மை (Analytics)' : 'District Analytics Admin',
+      desc: isTa
+        ? 'கிராமப்புற நோய் பரவல் வரைபடம் மற்றும் 108 ஆம்புலன்ஸ் பதிவுகளைக் கண்காணிக்கவும்.'
+        : 'Monitor village disease heatmaps, doctor stats, emergency 108 dispatch logs.',
       icon: <Building2 className="w-6 h-6 text-brick-dark" />,
       targetPath: '/admin/dashboard',
-      badge: 'Nabha Health Admin'
+      badge: isTa ? 'மாவட்ட நிர்வாகம்' : 'Health Admin'
     }
   ];
 
   const quickStats = [
-    { label: 'Connected Villages', val: '48 Villages', sub: 'Nabha Tehsil, Punjab' },
-    { label: 'Jan Aushadhi Stores', val: '12 Kendras', sub: 'Generic Meds In Stock' },
-    { label: 'ASHA Field Workers', val: '140+ Workers', sub: 'Door-to-Door Intake' },
-    { label: 'Emergency 108 ETA', val: '< 8 Minutes', sub: 'Nabha Ambulance Unit' }
+    {
+      label: isTa ? 'இணைக்கப்பட்ட கிராமங்கள்' : 'Connected Villages',
+      val: isTa ? '48 கிராமங்கள்' : '48 Villages',
+      sub: isTa ? 'நபாத தாலுகா, பஞ்சாப்' : 'Nabha Tehsil, Punjab'
+    },
+    {
+      label: isTa ? 'மக்கள் மருந்தகங்கள்' : 'Jan Aushadhi Stores',
+      val: isTa ? '12 மருந்தகங்கள்' : '12 Kendras',
+      sub: isTa ? 'குறைந்த விலை மருந்துகள்' : 'Generic Meds In Stock'
+    },
+    {
+      label: isTa ? 'ASHA களப் பணியாளர்கள்' : 'ASHA Field Workers',
+      val: isTa ? '140+ பணியாளர்கள்' : '140+ Workers',
+      sub: isTa ? 'நேரடி பரிசோதனை' : 'Door-to-Door Intake'
+    },
+    {
+      label: isTa ? '108 அவசர ஆம்புலன்ஸ்' : 'Emergency 108 ETA',
+      val: isTa ? '< 8 நிமிடங்கள்' : '< 8 Minutes',
+      sub: isTa ? 'ஆம்புலன்ஸ் சேவை' : 'Nabha Ambulance Unit'
+    }
   ];
 
   return (
@@ -89,10 +115,10 @@ export const Splash: React.FC = () => {
             <StethoscopeLogo size={36} animate={false} />
             <div>
               <span className="text-xl font-bold font-serif text-brick tracking-tight">
-                SehatLink (ਸਿਹਤ ਲਿੰਕ)
+                SehatLink {isTa ? '(சேஹத் லிங்க்)' : '(ਸਿਹਤ ਲਿੰਕ)'}
               </span>
               <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-olive ml-2 bg-olive/10 px-1.5 py-0.5 rounded border border-olive/20">
-                OFFLINE-FIRST RURAL TELEMEDICINE
+                {isTa ? 'இணையற்ற கிராமப்புற தொலைமருத்துவம்' : 'OFFLINE-FIRST RURAL TELEMEDICINE'}
               </span>
             </div>
           </div>
@@ -104,9 +130,9 @@ export const Splash: React.FC = () => {
               size="sm"
               onClick={() => navigate('/login')}
             >
-              Sign In
+              {isTa ? 'உள்நுழைக' : 'Sign In'}
             </Button>
-            <LinkToEmergency />
+            <LinkToEmergency isTa={isTa} />
           </div>
         </div>
       </header>
@@ -123,33 +149,51 @@ export const Splash: React.FC = () => {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-parchment border border-vintage-gold text-xs font-serif text-denim font-bold shadow-sm">
               <VintageSealBadge size="sm" />
-              <span>Smart India Hackathon Prototype • Nabha Rural Health Project</span>
+              <span>
+                {isTa
+                  ? 'ஸ்மார்ட் இந்தியா ஹேக்கத்தான் திட்டம் • கிராமப்புற சுகாதார திட்டம்'
+                  : 'Smart India Hackathon Prototype • Nabha Rural Health Project'}
+              </span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-bold font-serif text-brick leading-tight">
-              Offline-First Telemedicine for Rural Punjab Villages
+              {isTa
+                ? 'கிராமப்புறங்களுக்கான இணையற்ற தொலைமருத்துவ தளம்'
+                : 'Offline-First Telemedicine for Rural Villages'}
             </h1>
 
             <p className="text-base sm:text-lg font-serif text-charcoal-light leading-relaxed">
-              Bridging the healthcare gap in Nabha through voice-assisted AI triage, door-to-door ASHA worker intakes, digital prescriptions, and local Jan Aushadhi pharmacy inventory—even without active internet.
+              {isTa
+                ? 'குரல் வழி AI பரிசோதனை, ASHA பணியாளர்களின் நேரடி உடல்நலப் பரிசோதனை, டிஜிட்டல் மருந்துச்சீட்டுகள் மற்றும் மக்கள் மருந்தக இருப்பு நிலை மூலம் கிராமப்புற மருத்துவ இடைவெளியைக் குறைக்கிறோம்—இணைய சமிக்ஞை இல்லாத போதும்.'
+                : 'Bridging the healthcare gap in Nabha through voice-assisted AI triage, door-to-door ASHA worker intakes, digital prescriptions, and local Jan Aushadhi pharmacy inventory—even without active internet.'}
             </p>
 
             {/* Quick Hero Features */}
             <div className="grid grid-cols-3 gap-3 pt-2">
               <div className="p-3 bg-warm-white rounded-lg border border-parchment-dark shadow-sm">
                 <Mic className="w-5 h-5 text-brick mb-1" />
-                <h4 className="text-xs font-serif font-bold text-charcoal">Voice Triage</h4>
-                <p className="text-[10px] text-charcoal-light">Punjabi & Hindi Input</p>
+                <h4 className="text-xs font-serif font-bold text-charcoal">
+                  {isTa ? 'குரல் வழி AI' : 'Voice Triage'}
+                </h4>
+                <p className="text-[10px] text-charcoal-light">
+                  {isTa ? 'தமிழ் & English' : 'Tamil & English Input'}
+                </p>
               </div>
               <div className="p-3 bg-warm-white rounded-lg border border-parchment-dark shadow-sm">
                 <WifiOff className="w-5 h-5 text-olive mb-1" />
-                <h4 className="text-xs font-serif font-bold text-charcoal">Offline Sync</h4>
+                <h4 className="text-xs font-serif font-bold text-charcoal">
+                  {isTa ? 'இணையமற்ற சேமிப்பு' : 'Offline Sync'}
+                </h4>
                 <p className="text-[10px] text-charcoal-light">IndexedDB Local Queue</p>
               </div>
               <div className="p-3 bg-warm-white rounded-lg border border-parchment-dark shadow-sm">
                 <ShieldCheck className="w-5 h-5 text-denim mb-1" />
-                <h4 className="text-xs font-serif font-bold text-charcoal">ABHA Linked</h4>
-                <p className="text-[10px] text-charcoal-light">Digital QR Cards</p>
+                <h4 className="text-xs font-serif font-bold text-charcoal">
+                  {isTa ? 'ABHA இணைப்பு' : 'ABHA Linked'}
+                </h4>
+                <p className="text-[10px] text-charcoal-light">
+                  {isTa ? 'டிஜிட்டல் QR அட்டை' : 'Digital QR Cards'}
+                </p>
               </div>
             </div>
 
@@ -161,7 +205,7 @@ export const Splash: React.FC = () => {
                 icon={<ArrowRight className="w-5 h-5" />}
                 onClick={() => navigate('/select-role')}
               >
-                Launch Telemedicine Portals
+                {isTa ? 'தொலைமருத்துவ தளத்தைத் தொடங்கு' : 'Launch Telemedicine Portals'}
               </Button>
               <Button
                 variant="outline"
@@ -169,7 +213,7 @@ export const Splash: React.FC = () => {
                 icon={<PhoneCall className="w-5 h-5 text-emergency-red animate-bounce" />}
                 onClick={() => navigate('/patient/emergency')}
               >
-                Nabha 108 SOS
+                {isTa ? '108 அவசர ஆம்புலன்ஸ்' : 'Nabha 108 SOS'}
               </Button>
             </div>
           </motion.div>
@@ -185,10 +229,10 @@ export const Splash: React.FC = () => {
             <div className="flex items-center justify-between border-b-2 border-vintage-gold pb-3 mb-4">
               <div>
                 <span className="text-[10px] font-mono tracking-widest text-olive uppercase block">
-                  GOVERNMENT CIVIL HOSPITAL • NABHA
+                  {isTa ? 'அரசு தலைமை மருத்துவமனை • நபாத' : 'GOVERNMENT CIVIL HOSPITAL • NABHA'}
                 </span>
                 <h3 className="font-serif font-bold text-xl text-denim">
-                  ਸਿਹਤ ਸੇਵਾਵਾਂ (Health Services)
+                  {isTa ? 'சுகாதார சேவைகள் (Health Services)' : 'ਸਿਹਤ ਸੇਵਾਵਾਂ (Health Services)'}
                 </h3>
               </div>
               <VintageSealBadge size="lg" />
@@ -206,9 +250,11 @@ export const Splash: React.FC = () => {
                   </div>
                   <div className="text-left">
                     <p className="font-serif font-bold text-sm text-charcoal group-hover:text-brick">
-                      ਬੋਲ ਕੇ ਲੱਛਣ ਦੱਸੋ (Speak Symptoms)
+                      {isTa ? 'அறிகுறிகளை பேசுங்கள் (Speak Symptoms)' : 'Speak Symptoms'}
                     </p>
-                    <p className="text-[11px] text-charcoal-light">Voice AI Triage in Punjabi / Hindi</p>
+                    <p className="text-[11px] text-charcoal-light">
+                      {isTa ? 'தமிழ் & ஆங்கிலத்தில் குரல் வழி AI' : 'Voice AI Triage in Tamil / English'}
+                    </p>
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-brick group-hover:translate-x-1 transition-transform" />
@@ -224,9 +270,11 @@ export const Splash: React.FC = () => {
                   </div>
                   <div className="text-left">
                     <p className="font-serif font-bold text-sm text-charcoal group-hover:text-olive">
-                      ਆਸ਼ਾ ਵਰਕਰ ਇਨਟੇਕ (ASHA Intake)
+                      {isTa ? 'ASHA சுகாதாரப் பணியாளர் பதிவு' : 'ASHA Intake'}
                     </p>
-                    <p className="text-[11px] text-charcoal-light">Record Vitals offline (SpO2, BP, Temp)</p>
+                    <p className="text-[11px] text-charcoal-light">
+                      {isTa ? 'உடல் அளவீடுகளைப் பதிவு செய் (SpO2, BP, Temp)' : 'Record Vitals offline (SpO2, BP, Temp)'}
+                    </p>
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-olive group-hover:translate-x-1 transition-transform" />
@@ -242,9 +290,11 @@ export const Splash: React.FC = () => {
                   </div>
                   <div className="text-left">
                     <p className="font-serif font-bold text-sm text-charcoal group-hover:text-denim">
-                      ਜਨ ਔਸ਼ਧੀ ਦਵਾਈਆਂ (Jan Aushadhi Search)
+                      {isTa ? 'மக்கள் மருந்தகம் (Jan Aushadhi)' : 'Jan Aushadhi Search'}
                     </p>
-                    <p className="text-[11px] text-charcoal-light">Find generic stock in Nabha kendras</p>
+                    <p className="text-[11px] text-charcoal-light">
+                      {isTa ? 'குறைந்த விலை மாற்று மருந்துகளைத் தேடுங்கள்' : 'Find generic stock in Nabha kendras'}
+                    </p>
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-denim group-hover:translate-x-1 transition-transform" />
@@ -277,10 +327,12 @@ export const Splash: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-brick">
-            Explore SehatLink Ecosystem Portals
+            {isTa ? 'SehatLink சேவைத் தளங்களை ஆராயுங்கள்' : 'Explore SehatLink Ecosystem Portals'}
           </h2>
           <p className="text-sm font-serif text-charcoal-light">
-            Custom tailored workflows for every participant in the rural healthcare supply chain.
+            {isTa
+              ? 'கிராமப்புற மருத்துவக் கட்டமைப்பின் ஒவ்வொருவருக்கும் ஏற்ற தனிப்பயனாக்கப்பட்ட சேவைகள்.'
+              : 'Custom tailored workflows for every participant in the rural healthcare supply chain.'}
           </p>
         </div>
 
@@ -314,7 +366,7 @@ export const Splash: React.FC = () => {
                 icon={<ArrowRight className="w-4 h-4" />}
                 onClick={() => navigate(item.targetPath)}
               >
-                Open Portal
+                {isTa ? 'தளத்தைத் திறக்கவும்' : 'Open Portal'}
               </Button>
             </div>
           ))}
@@ -327,34 +379,51 @@ export const Splash: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4">
               <span className="text-xs font-mono font-bold uppercase text-olive tracking-widest block">
-                PUNJAB RURAL HEALTH MISSION
+                {isTa ? 'கிராமப்புற சுகாதார பணி' : 'RURAL HEALTH MISSION'}
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-brick">
-                Empowering Village ASHA Workers & Remote Doctors
+                {isTa
+                  ? 'ASHA சுகாதாரப் பணியாளர்கள் மற்றும் மருத்துவர்களை மேம்படுத்துதல்'
+                  : 'Empowering Village ASHA Workers & Remote Doctors'}
               </h2>
               <p className="text-sm font-serif text-charcoal-light leading-relaxed">
-                "SehatLink allows us to capture patient vitals during home visits in Alhoran even when there is no mobile signal. Once we reach the main road, all records sync automatically to Dr. Amanpreet in Nabha."
+                {isTa
+                  ? '"இணைய சமிக்ஞை இல்லாத இடங்களிலும் நோயாளிகளின் உடல் அளவீடுகளைப் பதிவு செய்ய SehatLink உதவுகிறது. இணையம் வந்தவுடன் அனைத்துத் தகவல்களும் தாமாகவே ஒருங்கிணைக்கப்படுகின்றன."'
+                  : '"SehatLink allows us to capture patient vitals during home visits even when there is no mobile signal. Once we reach the main road, all records sync automatically to Dr. Amanpreet in Nabha."'}
               </p>
               <div className="pt-2">
-                <p className="font-serif font-bold text-sm text-denim">Harpreet Kaur</p>
-                <p className="text-xs text-olive font-serif">Lead ASHA Worker • Nabha Sector 3</p>
+                <p className="font-serif font-bold text-sm text-denim">
+                  {isTa ? 'ஹர்ப்ரீத் கவுர்' : 'Harpreet Kaur'}
+                </p>
+                <p className="text-xs text-olive font-serif">
+                  {isTa ? 'தலைமை ASHA பணியாளர் • Nabha' : 'Lead ASHA Worker • Nabha Sector 3'}
+                </p>
               </div>
             </div>
 
             <div className="space-y-3 bg-cream-light p-6 rounded-xl border border-parchment-dark shadow-sm">
               <h3 className="font-serif font-bold text-base text-brick flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-success-green" />
-                ABDM & Ayushman Bharat Compliant
+                {isTa ? 'ABDM & ஆயுஷ்மான் பாரத் இணக்கம்' : 'ABDM & Ayushman Bharat Compliant'}
               </h3>
               <ul className="space-y-2 text-xs font-serif text-charcoal">
                 <li className="flex items-center gap-2">
-                  <span className="text-olive">•</span> Every patient gets a unique 14-digit ABHA Health Card & QR code.
+                  <span className="text-olive">•</span>{' '}
+                  {isTa
+                    ? 'ஒவ்வொரு நோயாளிக்கும் 14 இலக்க ABHA சுகாதார அடையாள அட்டை மற்றும் QR குறியீடு.'
+                    : 'Every patient gets a unique 14-digit ABHA Health Card & QR code.'}
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-olive">•</span> Instant emergency dispatch with Nabha 108 GPS unit tracking.
+                  <span className="text-olive">•</span>{' '}
+                  {isTa
+                    ? '108 GPS ஆம்புலன்ஸ் சேவை மூலமாக உடனடி அவசர உதவி.'
+                    : 'Instant emergency dispatch with Nabha 108 GPS unit tracking.'}
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-olive">•</span> Multilingual Sehat Sahayak AI Assistant available 24/7.
+                  <span className="text-olive">•</span>{' '}
+                  {isTa
+                    ? '24/7 செயல்படும் பன்மொழி Sehat Sahayak AI உதவியாளர்.'
+                    : 'Multilingual Sehat Sahayak AI Assistant available 24/7.'}
                 </li>
               </ul>
             </div>
@@ -365,15 +434,15 @@ export const Splash: React.FC = () => {
   );
 };
 
-const LinkToEmergency: React.FC = () => {
+const LinkToEmergency: React.FC<{ isTa?: boolean }> = ({ isTa }) => {
   const navigate = useNavigate();
   return (
     <button
       onClick={() => navigate('/patient/emergency')}
-      className="bg-emergency-red hover:bg-red-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold font-serif flex items-center space-x-1 shadow-sm transition-transform active:scale-95"
+      className="bg-emergency-red hover:bg-red-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold font-serif flex items-center space-x-1 shadow-sm transition-transform active:scale-95 cursor-pointer"
     >
       <PhoneCall className="w-4 h-4 animate-bounce" />
-      <span className="hidden sm:inline">Nabha 108 Emergency</span>
+      <span className="hidden sm:inline">{isTa ? '108 அவசர உதவி' : 'Nabha 108 Emergency'}</span>
     </button>
   );
 };
