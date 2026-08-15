@@ -21,7 +21,7 @@ export const AiAssistantFAB: React.FC<AiAssistantFABProps> = ({
   const isDark = themeMode === 'vintage-dark';
 
   return (
-    <div className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex items-center gap-3 pointer-events-auto">
+    <div className="fixed bottom-24 sm:bottom-24 right-4 sm:right-6 z-50 flex items-center gap-3 pointer-events-auto">
       {/* Label Pill on Desktop */}
       {!isOpen && (
         <div
@@ -33,7 +33,7 @@ export const AiAssistantFAB: React.FC<AiAssistantFABProps> = ({
           }`}
         >
           <span className="w-2 h-2 rounded-full bg-success-green animate-pulse" />
-          <span>{userLanguage === 'pa' ? 'ਸਿਹਤ ਸਹਾਇਕ AI' : 'Sehat Sahayak AI'}</span>
+          <span>{userLanguage === 'ta' ? 'சேஹத் உதவியாளர் AI' : 'Sehat Sahayak AI'}</span>
         </div>
       )}
 

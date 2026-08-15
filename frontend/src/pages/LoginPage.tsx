@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 const authAppearance = {
   layout: {
     socialButtonsPlacement: 'bottom' as const,
+    showOptionalFields: false,
   },
   variables: {
     colorPrimary: '#324A66',
@@ -21,10 +22,10 @@ const authAppearance = {
   },
   elements: {
     cardBox: 'bg-transparent shadow-none border-0 p-0 w-full',
-    headerTitle: 'text-charcoal font-serif text-2xl font-bold tracking-tight',
-    headerSubtitle: 'text-charcoal-light font-serif text-sm',
+    headerTitle: 'text-charcoal font-serif text-2xl font-bold tracking-tight text-center',
+    headerSubtitle: 'text-charcoal-light font-serif text-sm text-center',
     formButtonPrimary:
-      'bg-brick hover:bg-brick-dark text-white border border-brick-dark shadow-sm min-h-[44px] font-semibold',
+      'bg-brick hover:bg-brick-dark text-white border border-brick-dark shadow-sm min-h-[44px] font-semibold w-full',
     formFieldInput:
       'bg-warm-white border border-parchment-dark text-charcoal min-h-[44px] focus:border-denim focus:ring-denim/20',
     footerActionLink: 'text-denim hover:text-denim-dark font-semibold',
@@ -33,6 +34,9 @@ const authAppearance = {
       'bg-warm-white border border-parchment-dark text-charcoal hover:bg-parchment min-h-[44px]',
     dividerLine: 'bg-parchment-dark',
     dividerText: 'text-charcoal-light',
+    footer: 'hidden',
+    footerAction: 'hidden',
+    devModeBadge: 'hidden',
   },
 };
 
@@ -67,14 +71,15 @@ export const LoginPage: React.FC = () => {
           <LanguageToggle />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 items-stretch min-h-[calc(100vh-110px)] pb-6">
+        <div className="grid lg:grid-cols-2 gap-6 items-center min-h-[calc(100vh-110px)] pb-6">
+          {/* Left Column: Hero Info */}
           <motion.section
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
             className="order-1 lg:order-none"
           >
-            <Card variant="paper" className="h-full p-6 sm:p-8 lg:p-10 overflow-hidden relative">
+            <Card variant="paper" className="h-full p-6 sm:p-8 lg:p-10 overflow-hidden relative flex flex-col justify-between">
               <div className="absolute inset-0 opacity-60 pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(161,76,65,0.08),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(50,74,102,0.08),transparent_28%)]" />
               <div className="relative space-y-6">
                 <div className="flex items-center gap-3">
@@ -149,20 +154,38 @@ export const LoginPage: React.FC = () => {
             </Card>
           </motion.section>
 
+          {/* Right Column: Centered Auth Form */}
           <motion.section
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.08 }}
-            className="order-2 lg:order-none"
+            className="order-2 lg:order-none flex justify-center items-center w-full"
           >
-            <Card variant="paper" className="h-full p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
-              <div className="space-y-2 mb-4">
-                <h2 className="text-2xl font-bold font-serif text-charcoal">{t('auth.login.heading')}</h2>
-                <p className="text-sm font-serif text-charcoal-light">{t('auth.login.subheading')}</p>
+            <Card variant="paper" className="w-full max-w-lg p-6 sm:p-8 lg:p-9 flex flex-col justify-center items-center shadow-vintage-lg">
+              {/* Action Switcher Buttons (Sign In vs Sign Up) */}
+              <div className="w-full grid grid-cols-2 gap-1 p-1 bg-parchment/80 rounded-xl border border-parchment-dark mb-6">
+                <button
+                  type="button"
+                  className="py-2 text-xs font-serif font-bold rounded-lg bg-brick text-white shadow-sm transition text-center cursor-pointer"
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate('/signup')}
+                  className="py-2 text-xs font-serif font-bold rounded-lg text-charcoal-light hover:text-charcoal hover:bg-cream-light transition text-center cursor-pointer"
+                >
+                  Create Account
+                </button>
               </div>
 
-              {/* Demo Account Credentials Banner for SIH Prototype */}
-              <div className="mb-4 bg-vintage-paper p-4 rounded-xl border-2 border-vintage-gold shadow-sm font-serif">
+              <div className="text-center space-y-1 mb-5 w-full">
+                <h2 className="text-2xl font-bold font-serif text-charcoal">{t('auth.login.heading')}</h2>
+                <p className="text-xs font-serif text-charcoal-light">{t('auth.login.subheading')}</p>
+              </div>
+
+              {/* Demo Account Credentials Banner */}
+              <div className="w-full mb-5 bg-vintage-paper p-4 rounded-xl border-2 border-vintage-gold shadow-sm font-serif">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-brick uppercase tracking-wider">
                     🔑 Prototype Demo Credentials
@@ -182,16 +205,16 @@ export const LoginPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-3 grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => {
                       useAuthStore.getState().setDemoLogin('patient');
                       navigate('/patient/home', { replace: true });
                     }}
-                    className="flex-1 py-2.5 px-3 bg-brick hover:bg-brick-dark text-white rounded-lg text-xs font-serif font-bold shadow-sm transition active:scale-95 text-center cursor-pointer"
+                    className="py-2.5 px-3 bg-brick hover:bg-brick-dark text-white rounded-lg text-xs font-serif font-bold shadow-sm transition active:scale-95 text-center cursor-pointer"
                   >
-                    🚀 Enter as Dummy Patient
+                    🚀 Dummy Patient
                   </button>
 
                   <button
@@ -200,25 +223,27 @@ export const LoginPage: React.FC = () => {
                       useAuthStore.getState().setDemoLogin('doctor');
                       navigate('/doctor/dashboard', { replace: true });
                     }}
-                    className="py-2.5 px-3 bg-denim hover:bg-denim-dark text-white rounded-lg text-xs font-serif font-bold shadow-sm transition active:scale-95 cursor-pointer"
+                    className="py-2.5 px-3 bg-denim hover:bg-denim-dark text-white rounded-lg text-xs font-serif font-bold shadow-sm transition active:scale-95 text-center cursor-pointer"
                   >
                     👨‍⚕️ Doctor Demo
                   </button>
                 </div>
               </div>
 
-
+              {/* Auth Form Container */}
               <div className="w-full overflow-hidden rounded-2xl border border-parchment-dark bg-warm-white shadow-vintage p-4 sm:p-5">
                 <SignIn appearance={authAppearance} />
               </div>
 
-              <p className="mt-5 text-sm font-serif text-charcoal-light">
-                {t('auth.login.switchPrompt')}{' '}
-                <Link to="/signup" className="text-denim font-semibold hover:text-denim-dark focus:outline-none focus:underline">
-                  {t('auth.login.switchAction')}
-                </Link>
-              </p>
-
+              {/* Action Switcher Footer */}
+              <div className="mt-6 pt-4 border-t border-parchment-dark w-full text-center">
+                <p className="text-xs font-serif text-charcoal-light">
+                  {t('auth.login.switchPrompt')}{' '}
+                  <Link to="/signup" className="text-denim font-bold hover:underline">
+                    {t('auth.login.switchAction')}
+                  </Link>
+                </p>
+              </div>
             </Card>
           </motion.section>
         </div>

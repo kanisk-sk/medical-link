@@ -66,3 +66,26 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #4A5340;
 }
+
+/* Completely hide Clerk dev mode badge & black footer box */
+.cl-footer,
+.cl-devModeBadge,
+.cl-footerAction,
+.cl-internal-ph3vef,
+.cl-internal-1dau62g,
+.cl-internal-157x4t7,
+[class*="cl-footer"],
+[class*="cl-devModeBadge"],
+[class*="cl-internal-ph3vef"],
+[class*="cl-internal-1dau62g"],
+[class*="cl-internal-157x4t7"],
+.cl-userButtonPopoverFooter {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}

@@ -41,7 +41,7 @@ export const Header: React.FC = () => {
                   {t('appName')}
                 </span>
                 <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-olive ml-2 bg-olive/10 px-1.5 py-0.5 rounded border border-olive/20">
-                  NABHA TELEHEALTH
+                  TELEHEALTH
                 </span>
               </div>
             </Link>
