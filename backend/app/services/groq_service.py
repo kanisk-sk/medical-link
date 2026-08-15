@@ -52,7 +52,14 @@ def get_fallback_response(
     Provides a helpful, domain-specific rural telemedicine response when Groq API key is missing or offline.
     """
     if is_emergency:
-        if language == "pa":
+        if language == "ta":
+            return (
+                "⚠️ **அவசர எச்சரிக்கை (EMERGENCY ALERT)**\n\n"
+                "உங்கள் அறிகுறிகள் தீவிரமானதாக இருக்கலாம். தயவுசெய்து உடனடியாக **108 ஆம்புலன்ஸ்** சேவையை அழைக்கவும் "
+                "அல்லது SehatLink செயலியின் சிவப்பு நிற அவசர பொத்தானை அழுத்தவும். அருகில் உள்ள அரசு மருத்துவமனையைத் தொடர்பு கொள்ளவும்.\n\n"
+                "(Emergency Alert: Symptoms appear critical. Call 108 Ambulance immediately.)"
+            )
+        elif language == "pa":
             return (
                 "⚠️ **ਐਮਰਜੈਂਸੀ ਚੇਤਾਵਨੀ (EMERGENCY ALERT)**\n\n"
                 "ਤੁਹਾਡੇ ਲੱਛਣ ਗੰਭੀਰ ਹੋ ਸਕਦੇ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਤੁਰੰਤ **Nabha 108 ਐਂਬੂਲੈਂਸ** ਨੂੰ ਕਾਲ ਕਰੋ "
@@ -65,7 +72,15 @@ def get_fallback_response(
             "immediately or visit the nearest Government Civil Hospital / PHC in Nabha."
         )
 
-    if language == "pa":
+    if language == "ta":
+        return (
+            "வணக்கம்! நான் உங்கள் செஹத் உதவியாளர் (SehatLink AI Assistant).\n\n"
+            "• **அறிகுறி பரிசோதனை**: காய்ச்சல், வலி அல்லது இருமல் பற்றிய கேள்விகளைக் கேட்கலாம்.\n"
+            "• **மருந்துத் தகவல்**: மக்கள் மருந்தகத்தில் (Jan Aushadhi Kendra) கிடைக்கும் குறைந்த விலை மருந்துகள் பற்றிய விவரங்கள்.\n"
+            "• **அவசர உதவி**: அவசர காலத்தில் 108 ஆம்புலன்ஸை உடனடியாகத் தொடர்பு கொள்ளவும்.\n\n"
+            "தயவுசெய்து உங்கள் கேள்வியைப் பதிவு செய்யவும்."
+        )
+    elif language == "pa":
         return (
             "ਜੀ ਆਇਆਂ ਨੂੰ! ਮੈਂ ਸਿਹਤ ਸਹਾਇਕ ਹਾਂ (SehatLink Rural Health Assistant)।\n\n"
             "• **ਲੱਛਣਾਂ ਦੀ ਜਾਂਚ**: ਤੁਸੀਂ ਆਪਣੀ ਬਿਮਾਰੀ ਜਾਂ ਬੁਖਾਰ ਬਾਰੇ ਪੁੱਛ ਸਕਦੇ ਹੋ।\n"

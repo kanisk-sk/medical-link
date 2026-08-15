@@ -139,7 +139,38 @@ def get_quick_prompts(
     prompts: List[QuickPromptItem] = []
 
     if role in ["patient"]:
-        if language == "pa":
+        if language == "ta":
+            prompts.extend([
+                QuickPromptItem(
+                    id="p1_ta",
+                    label="காய்ச்சல் & அறிகுறி உதவி",
+                    prompt="எனக்கு 2 நாட்களாக லேசான காய்ச்சல் மற்றும் இருமல் உள்ளது. நான் என்ன செய்ய வேண்டும்?",
+                    category="symptoms",
+                    language="ta"
+                ),
+                QuickPromptItem(
+                    id="p2_ta",
+                    label="மக்கள் மருந்தகம் (Jan Aushadhi)",
+                    prompt="மக்கள் மருந்தகத்தில் கிடைக்கும் குறைந்த விலை மருந்துகள் பற்றிய தகவல்களை வழங்கவும்.",
+                    category="dosage",
+                    language="ta"
+                ),
+                QuickPromptItem(
+                    id="p3_ta",
+                    label="108 அவசர ஆம்புலன்ஸ்",
+                    prompt="அவசர நிலையில் 108 ஆம்புலன்ஸை எவ்வாறு அழைப்பது?",
+                    category="emergency",
+                    language="ta"
+                ),
+                QuickPromptItem(
+                    id="p4_ta",
+                    label="இரத்த அழுத்த அளவீடு (BP)",
+                    prompt="எனது இரத்த அழுத்தம் 140/90 என வந்துள்ளது. இதன் பொருள் என்ன?",
+                    category="general",
+                    language="ta"
+                )
+            ])
+        elif language == "pa":
             prompts.extend([
                 QuickPromptItem(
                     id="p1",

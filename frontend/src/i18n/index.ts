@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from '../../public/locales/en/translation.json';
+import ta from '../../public/locales/ta/translation.json';
 import pa from '../../public/locales/pa/translation.json';
 import hi from '../../public/locales/hi/translation.json';
 
@@ -12,6 +13,7 @@ i18n
   .init({
     resources: {
       en: { translation: en },
+      ta: { translation: ta },
       pa: { translation: pa },
       hi: { translation: hi }
     },

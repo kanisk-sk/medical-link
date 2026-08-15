@@ -2,7 +2,7 @@ export type SehatLinkRole = 'patient' | 'doctor' | 'health_worker' | 'pharmacist
 
 export type UserRole = SehatLinkRole;
 
-export type Language = 'en' | 'pa' | 'hi';
+export type Language = 'en' | 'ta' | 'pa' | 'hi';
 
 export type Priority = 'HIGH' | 'MEDIUM' | 'LOW';
 

@@ -69,7 +69,9 @@ def build_system_prompt(
     page_instruction = PAGE_SPECIFIC_INSTRUCTIONS.get(current_page, "") if current_page else ""
 
     lang_instruction = ""
-    if language == "pa":
+    if language == "ta":
+        lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, polite Tamil (தமிழ்)."
+    elif language == "pa":
         lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, polite Punjabi (ਪੰਜਾਬੀ)."
     elif language == "hi":
         lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, polite Hindi (हिंदी)."

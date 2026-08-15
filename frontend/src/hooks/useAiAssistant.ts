@@ -87,7 +87,9 @@ export function useAiAssistant() {
     const welcomeMsg: AssistantMessage = {
       id: 'welcome-0',
       role: 'assistant',
-      content: userLanguage === 'pa'
+      content: userLanguage === 'ta'
+        ? "வணக்கம்! நான் **செஹத் సహాయக்** (SehatLink AI). உங்கள் சுகாதார கவலைகள், அறிகுறிகள், மருந்துகள் மற்றும் அவசர உதவி குறித்து என்னிடம் கேட்கலாம்."
+        : userLanguage === 'pa'
         ? "ਜੀ ਆਇਆਂ ਨੂੰ! ਮੈਂ **ਸਿਹਤ ਸਹਾਇਕ** (SehatLink Rural Health AI) ਹਾਂ। ਮੈਂ ਬੁਖਾਰ, ਲੱਛਣਾਂ ਦੀ ਜਾਂਚ, ਜਨ ਔਸ਼ਧੀ ਕੇਂਦਰ ਦਵਾਈਆਂ ਅਤੇ ਐਮਰਜੈਂਸੀ ਮਦਦ ਲਈ ਇੱਥੇ ਹਾਂ। ਤੁਸੀਂ ਕੀ ਪੁੱਛਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
         : userLanguage === 'hi'
         ? "नमस्ते! मैं **सेहत सहायक** (SehatLink AI) हूँ। मैं लक्षण जांच, जन औषधि दवाओं और नाभा स्वास्थ्य सेवाओं में आपकी सहायता के लिए तैयार हूँ।"
@@ -131,7 +133,7 @@ export function useAiAssistant() {
 
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert(userLanguage === 'pa' ? 'ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਵੌਇਸ ਰਿਕਾਰਡਿੰਗ ਸਪੋਰਟ ਨਹੀਂ ਹੈ।' : 'Voice recognition is not supported in this browser.');
+      alert(userLanguage === 'ta' ? 'உங்கள் உலாவியில் குரல் பதிவு ஆதரவு இல்லை.' : userLanguage === 'pa' ? 'ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਵੌਇਸ ਰਿਕਾਰਡਿੰਗ ਸਪੋਰਟ ਨਹੀਂ ਹੈ।' : 'Voice recognition is not supported in this browser.');
       return;
     }
 
@@ -139,7 +141,7 @@ export function useAiAssistant() {
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
-      recognition.lang = userLanguage === 'pa' ? 'pa-IN' : userLanguage === 'hi' ? 'hi-IN' : 'en-US';
+      recognition.lang = userLanguage === 'ta' ? 'ta-IN' : userLanguage === 'pa' ? 'pa-IN' : userLanguage === 'hi' ? 'hi-IN' : 'en-US';
 
       recognition.onstart = () => {
         setIsListening(true);
@@ -186,7 +188,7 @@ export function useAiAssistant() {
     const cleanText = text.replace(/[*#_`~]/g, '');
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = userLanguage === 'pa' ? 'pa-IN' : userLanguage === 'hi' ? 'hi-IN' : 'en-US';
+    utterance.lang = userLanguage === 'ta' ? 'ta-IN' : userLanguage === 'pa' ? 'pa-IN' : userLanguage === 'hi' ? 'hi-IN' : 'en-US';
     utterance.rate = 0.95; // Slightly slower pace for rural accessibility
 
     utterance.onend = () => {

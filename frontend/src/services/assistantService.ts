@@ -41,6 +41,31 @@ export async function fetchQuickPrompts(
     return await res.json();
   } catch (error) {
     // Local fallback prompts if backend is unreachable
+    if (language === 'ta') {
+      return [
+        {
+          id: 'fb1_ta',
+          label: 'காய்ச்சல் & அறிகுறி உதவி',
+          prompt: 'எனக்கு 2 நாட்களாக காய்ச்சல் உள்ளது. நான் என்ன செய்ய வேண்டும்?',
+          category: 'symptoms',
+          language: 'ta'
+        },
+        {
+          id: 'fb2_ta',
+          label: 'மக்கள் மருந்தகம் (Jan Aushadhi)',
+          prompt: 'மக்கள் மருந்தகத்தில் கிடைக்கும் குறைந்த விலை மருந்துகள் பற்றி கூறுக.',
+          category: 'dosage',
+          language: 'ta'
+        },
+        {
+          id: 'fb3_ta',
+          label: '108 அவசர ஆம்புலன்ஸ்',
+          prompt: 'அவசர நிலையில் 108 ஆம்புலன்ஸை எவ்வாறு அழைப்பது?',
+          category: 'emergency',
+          language: 'ta'
+        }
+      ];
+    }
     if (language === 'pa') {
       return [
         {
