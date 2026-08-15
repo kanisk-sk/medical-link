@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey, Text, Enum as SQLEnum
+from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey, Text, Enum as SQLEnum, JSON
 from sqlalchemy.orm import relationship
 import enum
 
@@ -24,23 +24,41 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(String, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=True)
+    password_hash = Column(String, nullable=True)
     name = Column(String, nullable=False)
-    phone = Column(String, unique=True, index=True, nullable=False)
+    phone = Column(String, nullable=True, index=True)
     role = Column(SQLEnum(UserRole), default=UserRole.PATIENT)
-    language = Column(String, default="pa")
+    language = Column(String, default="en")
     village = Column(String, nullable=True)
+    is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    # Relationships
+    patient_profile = relationship("PatientProfile", back_populates="user", uselist=False)
 
 class PatientProfile(Base):
     __tablename__ = "patients"
 
     id = Column(String, primary_key=True, index=True)
-    user_id = Column(String, ForeignKey("users.id"))
+    user_id = Column(String, ForeignKey("users.id"), nullable=True)
+    name = Column(String, nullable=False)
     abha_id = Column(String, index=True, nullable=True)
+    abha_address = Column(String, nullable=True)
     age = Column(Integer)
     gender = Column(String)
     village = Column(String)
+    blood_group = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    emergency_contact = Column(String, nullable=True)
+    qr_code_data = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    # Relationship
+    user = relationship("User", back_populates="patient_profile")
+    vitals = relationship("VitalsRecord", back_populates="patient")
+    consultations = relationship("Consultation", back_populates="patient")
+    prescriptions = relationship("Prescription", back_populates="patient")
 
 class VitalsRecord(Base):
     __tablename__ = "vitals"
@@ -55,29 +73,42 @@ class VitalsRecord(Base):
     recorded_by = Column(String, nullable=True)
     recorded_at = Column(DateTime, default=datetime.datetime.utcnow)
 
+    patient = relationship("PatientProfile", back_populates="vitals")
+
 class Consultation(Base):
     __tablename__ = "consultations"
 
     id = Column(String, primary_key=True, index=True)
     patient_id = Column(String, ForeignKey("patients.id"))
     doctor_id = Column(String, ForeignKey("users.id"), nullable=True)
+    doctor_name = Column(String, nullable=True)
     priority = Column(SQLEnum(PriorityEnum), default=PriorityEnum.LOW)
-    status = Column(String, default="waiting")
+    status = Column(String, default="scheduled")
+    scheduled_time = Column(String, nullable=True)
+    symptoms_summary = Column(Text, nullable=True)
     doctor_notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    patient = relationship("PatientProfile", back_populates="consultations")
+    prescription = relationship("Prescription", back_populates="consultation", uselist=False)
 
 class Prescription(Base):
     __tablename__ = "prescriptions"
 
     id = Column(String, primary_key=True, index=True)
-    consultation_id = Column(String, ForeignKey("consultations.id"))
+    consultation_id = Column(String, ForeignKey("consultations.id"), nullable=True)
     patient_id = Column(String, ForeignKey("patients.id"))
     doctor_name = Column(String)
     doctor_license = Column(String)
+    hospital_name = Column(String, default="Government Civil Hospital, Nabha")
     diagnosis = Column(Text)
-    medications_json = Column(Text)
-    qr_code_url = Column(String)
+    medications_json = Column(Text)  # Stores JSON array of medications
+    qr_code_url = Column(String, nullable=True)
+    digital_signature = Column(String, nullable=True)
     issued_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    patient = relationship("PatientProfile", back_populates="prescriptions")
+    consultation = relationship("Consultation", back_populates="prescription")
 
 class PharmacyItem(Base):
     __tablename__ = "pharmacy_inventory"
@@ -97,10 +128,11 @@ class EmergencyAlert(Base):
     __tablename__ = "emergency_alerts"
 
     id = Column(String, primary_key=True, index=True)
-    patient_id = Column(String, ForeignKey("patients.id"))
+    patient_id = Column(String, ForeignKey("patients.id"), nullable=True)
     patient_name = Column(String)
     village = Column(String)
     lat = Column(Float)
     lng = Column(Float)
     status = Column(String, default="dispatched")
+    ambulance_unit = Column(String, default="Nabha 108 Dispatch #4")
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
