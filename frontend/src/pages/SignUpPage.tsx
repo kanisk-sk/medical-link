@@ -79,7 +79,7 @@ export const SignUpPage: React.FC = () => {
                   <StethoscopeLogo size={52} animate={true} />
                   <div>
                     <p className="text-3xl font-bold font-serif text-brick">SehatLink</p>
-                    <p className="text-sm font-serif text-olive-dark">ਸਿਹਤ ਨਾਲ, ਪਿੰਡ ਨਾਲ</p>
+                    <p className="text-sm font-serif text-olive-dark">Digital Medical Consulting Platform</p>
                   </div>
                 </div>
 

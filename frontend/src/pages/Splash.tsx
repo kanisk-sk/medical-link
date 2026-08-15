@@ -115,7 +115,7 @@ export const Splash: React.FC = () => {
             <StethoscopeLogo size={36} animate={false} />
             <div>
               <span className="text-xl font-bold font-serif text-brick tracking-tight">
-                SehatLink {isTa ? '(சேஹத் லிங்க்)' : '(ਸਿਹਤ ਲਿੰਕ)'}
+                SehatLink {isTa ? '(சேஹத் லிங்க்)' : ''}
               </span>
               <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-olive ml-2 bg-olive/10 px-1.5 py-0.5 rounded border border-olive/20">
                 {isTa ? 'இணையற்ற கிராமப்புற தொலைமருத்துவம்' : 'OFFLINE-FIRST RURAL TELEMEDICINE'}
@@ -151,8 +151,8 @@ export const Splash: React.FC = () => {
               <VintageSealBadge size="sm" />
               <span>
                 {isTa
-                  ? 'ஸ்மார்ட் இந்தியா ஹேக்கத்தான் திட்டம் • கிராமப்புற சுகாதார திட்டம்'
-                  : 'Smart India Hackathon Prototype • Nabha Rural Health Project'}
+                  ? 'டிஜிட்டல் மருத்துவ ஆலோசனைக் கட்டமைப்பு • கிராமப்புற சுகாதார திட்டம்'
+                  : 'Digital Medical Consulting Platform • Rural Health Project'}
               </span>
             </div>
 
@@ -164,7 +164,7 @@ export const Splash: React.FC = () => {
 
             <p className="text-base sm:text-lg font-serif text-charcoal-light leading-relaxed">
               {isTa
-                ? 'குரல் வழி AI பரிசோதனை, ASHA பணியாளர்களின் நேரடி உடல்நலப் பரிசோதனை, டிஜிட்டல் மருந்துச்சீட்டுகள் மற்றும் மக்கள் மருந்தக இருப்பு நிலை மூலம் கிராமப்புற மருத்துவ இடைவெளியைக் குறைக்கிறோம்—இணைய சமிக்ஞை இல்லாத போதும்.'
+                ? 'குரல் வழி AI பரிசோதனை, ASHA பணியாளர்களின் நேரடி உடல்நலப் பரிசோதனை, டிஜிட்டል மருந்துச்சீட்டுகள் மற்றும் மக்கள் மருந்தக இருப்பு நிலை மூலம் கிராமப்புற மருத்துவ இடைவெளியைக் குறைக்கிறோம்—இணைய சமிக்ஞை இல்லாத போதும்.'
                 : 'Bridging the healthcare gap in Nabha through voice-assisted AI triage, door-to-door ASHA worker intakes, digital prescriptions, and local Jan Aushadhi pharmacy inventory—even without active internet.'}
             </p>
 
@@ -182,7 +182,7 @@ export const Splash: React.FC = () => {
               <div className="p-3 bg-warm-white rounded-lg border border-parchment-dark shadow-sm">
                 <WifiOff className="w-5 h-5 text-olive mb-1" />
                 <h4 className="text-xs font-serif font-bold text-charcoal">
-                  {isTa ? 'இணையமற்ற சேமிப்பு' : 'Offline Sync'}
+                  {isTa ? 'இணையமற்ற சேਮੀப்பு' : 'Offline Sync'}
                 </h4>
                 <p className="text-[10px] text-charcoal-light">IndexedDB Local Queue</p>
               </div>
@@ -232,7 +232,7 @@ export const Splash: React.FC = () => {
                   {isTa ? 'அரசு தலைமை மருத்துவமனை • நபாத' : 'GOVERNMENT CIVIL HOSPITAL • NABHA'}
                 </span>
                 <h3 className="font-serif font-bold text-xl text-denim">
-                  {isTa ? 'சுகாதார சேவைகள் (Health Services)' : 'ਸਿਹਤ ਸੇਵਾਵਾਂ (Health Services)'}
+                  {isTa ? 'சுகாதார சேவைகள் (Health Services)' : 'Health Services'}
                 </h3>
               </div>
               <VintageSealBadge size="lg" />
@@ -250,7 +250,7 @@ export const Splash: React.FC = () => {
                   </div>
                   <div className="text-left">
                     <p className="font-serif font-bold text-sm text-charcoal group-hover:text-brick">
-                      {isTa ? 'அறிகுறிகளை பேசுங்கள் (Speak Symptoms)' : 'Speak Symptoms'}
+                      {isTa ? 'அறிகுறிகளை பேசுங்கள்' : 'Speak Symptoms'}
                     </p>
                     <p className="text-[11px] text-charcoal-light">
                       {isTa ? 'தமிழ் & ஆங்கிலத்தில் குரல் வழி AI' : 'Voice AI Triage in Tamil / English'}
@@ -270,7 +270,7 @@ export const Splash: React.FC = () => {
                   </div>
                   <div className="text-left">
                     <p className="font-serif font-bold text-sm text-charcoal group-hover:text-olive">
-                      {isTa ? 'ASHA சுகாதாரப் பணியாளர் பதிவு' : 'ASHA Intake'}
+                      {isTa ? 'ASHA சுகாதாரப் பணியாளர் பதிவு' : 'ASHA Health Worker Intake'}
                     </p>
                     <p className="text-[11px] text-charcoal-light">
                       {isTa ? 'உடல் அளவீடுகளைப் பதிவு செய் (SpO2, BP, Temp)' : 'Record Vitals offline (SpO2, BP, Temp)'}
@@ -290,7 +290,7 @@ export const Splash: React.FC = () => {
                   </div>
                   <div className="text-left">
                     <p className="font-serif font-bold text-sm text-charcoal group-hover:text-denim">
-                      {isTa ? 'மக்கள் மருந்தகம் (Jan Aushadhi)' : 'Jan Aushadhi Search'}
+                      {isTa ? 'மக்கள் மருந்தகம்' : 'Jan Aushadhi Pharmacy Search'}
                     </p>
                     <p className="text-[11px] text-charcoal-light">
                       {isTa ? 'குறைந்த விலை மாற்று மருந்துகளைத் தேடுங்கள்' : 'Find generic stock in Nabha kendras'}
