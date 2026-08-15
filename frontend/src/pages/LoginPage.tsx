@@ -168,7 +168,7 @@ export const LoginPage: React.FC = () => {
                     🔑 Prototype Demo Credentials
                   </span>
                   <span className="text-[10px] bg-olive/20 text-olive px-2 py-0.5 rounded font-mono font-bold">
-                    SIH 2026 Prototype
+                    Demo Prototype
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs font-mono text-charcoal bg-warm-white p-2.5 rounded border border-parchment-dark">
