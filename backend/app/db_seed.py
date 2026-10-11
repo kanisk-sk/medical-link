@@ -24,7 +24,7 @@ def seed_database():
                 phone="+91 98765 43210",
                 role=UserRole.PATIENT,
                 language="ta",
-                village="Alhoran, Nabha"
+                village="Alhoran"
             )
             db.add(demo_user)
             db.commit()
@@ -41,7 +41,7 @@ def seed_database():
                 phone="+91 98123 45678",
                 role=UserRole.DOCTOR,
                 language="en",
-                village="Nabha Sector 1"
+                village="Sector 1"
             )
             db.add(dr_amanpreet)
             db.commit()
@@ -58,7 +58,7 @@ def seed_database():
                 abha_address="gurpreet.singh@abdm",
                 age=60,
                 gender="Male",
-                village="Alhoran, Nabha",
+                village="Alhoran",
                 blood_group="O+",
                 phone="+91 98765 43210",
                 emergency_contact="+91 98765 00000",
@@ -111,7 +111,7 @@ def seed_database():
                 patient_id="pat_101",
                 doctor_name="Dr. Amanpreet Singh (MD)",
                 doctor_license="PMC-2018-84920",
-                hospital_name="Government Civil Hospital, Nabha",
+                hospital_name="Government Civil Hospital",
                 diagnosis="Acute Bronchitis & Mild Hypoxia",
                 medications_json='[{"name":"Paracetamol 500mg","dosage":"1 tablet twice daily after food","duration":"5 days"},{"name":"Amoxicillin 500mg","dosage":"1 capsule 3 times daily","duration":"7 days"},{"name":"Salbutamol Inhaler","dosage":"2 puffs as needed for shortness of breath","duration":"14 days"}]',
                 digital_signature="SIG_AMANPREET_VERIFIED_84920"
@@ -124,8 +124,8 @@ def seed_database():
         med1 = db.query(PharmacyItem).filter(PharmacyItem.medicine_name == "Paracetamol 500mg").first()
         if not med1:
             meds = [
-                PharmacyItem(id="med_601", medicine_name="Paracetamol 500mg", generic_name="Acetaminophen", stock_status="in_stock", quantity=450, price_in_inr=12.50, pharmacy_name="Nabha Main Kendra #1", pharmacy_address="Near Civil Hospital Gate, Nabha", distance_km=0.8, contact_number="+91 98765 11111"),
-                PharmacyItem(id="med_602", medicine_name="Amoxicillin 500mg", generic_name="Amoxicillin Trihydrate", stock_status="in_stock", quantity=200, price_in_inr=42.00, pharmacy_name="Nabha Main Kendra #1", pharmacy_address="Near Civil Hospital Gate, Nabha", distance_km=0.8, contact_number="+91 98765 11111"),
+                PharmacyItem(id="med_601", medicine_name="Paracetamol 500mg", generic_name="Acetaminophen", stock_status="in_stock", quantity=450, price_in_inr=12.50, pharmacy_name="Main Kendra #1", pharmacy_address="Near Civil Hospital Gate, Rural", distance_km=0.8, contact_number="+91 98765 11111"),
+                PharmacyItem(id="med_602", medicine_name="Amoxicillin 500mg", generic_name="Amoxicillin Trihydrate", stock_status="in_stock", quantity=200, price_in_inr=42.00, pharmacy_name="Main Kendra #1", pharmacy_address="Near Civil Hospital Gate, Rural", distance_km=0.8, contact_number="+91 98765 11111"),
                 PharmacyItem(id="med_603", medicine_name="Salbutamol Inhaler 100mcg", generic_name="Albuterol", stock_status="low_stock", quantity=15, price_in_inr=85.00, pharmacy_name="Alhoran Rural Kendra", pharmacy_address="Village Bus Stand, Alhoran", distance_km=2.4, contact_number="+91 98765 22222")
             ]
             db.add_all(meds)
@@ -139,11 +139,11 @@ def seed_database():
                 id="sos_701",
                 patient_id="pat_101",
                 patient_name="Gurpreet Singh",
-                village="Alhoran, Nabha",
+                village="Alhoran",
                 lat=30.3753,
                 lng=76.1534,
                 status="dispatched",
-                ambulance_unit="Nabha 108 Dispatch Unit #4"
+                ambulance_unit="108 Dispatch Unit #4"
             )
             db.add(alert)
             db.commit()

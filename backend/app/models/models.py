@@ -100,7 +100,7 @@ class Prescription(Base):
     patient_id = Column(String, ForeignKey("patients.id"))
     doctor_name = Column(String)
     doctor_license = Column(String)
-    hospital_name = Column(String, default="Government Civil Hospital, Nabha")
+    hospital_name = Column(String, default="Government Civil Hospital")
     diagnosis = Column(Text)
     medications_json = Column(Text)  # Stores JSON array of medications
     qr_code_url = Column(String, nullable=True)
@@ -134,5 +134,5 @@ class EmergencyAlert(Base):
     lat = Column(Float)
     lng = Column(Float)
     status = Column(String, default="dispatched")
-    ambulance_unit = Column(String, default="Nabha 108 Dispatch #4")
+    ambulance_unit = Column(String, default="108 Dispatch #4")
     created_at = Column(DateTime, default=datetime.datetime.utcnow)

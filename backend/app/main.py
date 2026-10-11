@@ -36,7 +36,7 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.APP_NAME,
-    description="Offline-First Multilingual Telemedicine Platform for Nabha",
+    description="Offline-First Multilingual Telemedicine Platform for Rural",
     version="1.0.0"
 )
 
@@ -58,7 +58,7 @@ def read_root():
     return {
         "status": "online",
         "app": settings.APP_NAME,
-        "region": "Rural Nabha, Punjab",
+        "region": "Rural Punjab",
         "version": "1.0.0"
     }
 
@@ -74,7 +74,7 @@ def dispatch_emergency(request: EmergencyRequest):
         "patient": request.patient_name,
         "village": request.village,
         "eta_minutes": 8,
-        "ambulance_unit": "Nabha 108 Unit #PB-11-7482"
+        "ambulance_unit": "108 Unit #PB-11-7482"
     }
 
 @app.get("/api/pharmacy/search")
@@ -88,7 +88,7 @@ def search_pharmacy(query: str = ""):
             "quantity": 45,
             "priceInINR": 12.5,
             "pharmacyName": "Jan Aushadhi Kendra (Govt Hospital)",
-            "pharmacyAddress": "Near Circular Road, Nabha",
+            "pharmacyAddress": "Near Circular Road, Rural",
             "distanceKm": 0.8,
             "contactNumber": "+91 98140 12345"
         },
@@ -100,7 +100,7 @@ def search_pharmacy(query: str = ""):
             "quantity": 120,
             "priceInINR": 8.0,
             "pharmacyName": "Jan Aushadhi Kendra (Govt Hospital)",
-            "pharmacyAddress": "Near Circular Road, Nabha",
+            "pharmacyAddress": "Near Circular Road, Rural",
             "distanceKm": 0.8,
             "contactNumber": "+91 98140 12345"
         }

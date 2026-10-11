@@ -7,7 +7,7 @@ import { Button } from '../components/common/Button';
 
 export const AdminDashboard: React.FC = () => {
   const summaryMetrics = [
-    { label: 'Total Village Consultations', val: '1,420', sub: 'Nabha Tehsil (Past 30 Days)' },
+    { label: 'Total Village Consultations', val: '1,420', sub: 'Rural Region (Past 30 Days)' },
     { label: 'Emergency 108 Dispatches', val: '38 Alerts', sub: 'Avg Response: 7.8 Mins' },
     { label: 'Active ASHA Workers', val: '142 Workers', sub: '48 Villages Covered' },
     { label: 'Jan Aushadhi Inventory', val: '94.2%', sub: 'Generic Stock Availability' }
@@ -19,7 +19,7 @@ export const AdminDashboard: React.FC = () => {
       <div className="bg-denim text-white p-6 rounded-xl border-2 border-vintage-gold shadow-vintage flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <span className="text-xs font-mono uppercase text-vintage-gold font-bold tracking-widest block">
-            PUNJAB RURAL TELE-HEALTH ADMINISTRATION • NABHA TEHSIL
+            PUNJAB RURAL TELE-HEALTH ADMINISTRATION • RURAL REGION
           </span>
           <h1 className="text-2xl font-bold font-serif text-white">
             District Healthcare Analytics & Disease Outbreak Heatmap
@@ -34,7 +34,7 @@ export const AdminDashboard: React.FC = () => {
             variant="primary"
             size="sm"
             icon={<Download className="w-4 h-4" />}
-            onClick={() => alert('Downloading Nabha District Healthcare Report (CSV)...')}
+            onClick={() => alert('Downloading District Healthcare Report (CSV)...')}
           >
             Export Health Report (CSV)
           </Button>

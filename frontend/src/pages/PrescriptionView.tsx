@@ -13,7 +13,7 @@ export const PrescriptionView: React.FC = () => {
   const { activePrescription, currentRecord } = usePatientStore();
 
   const fallbackPrescription: Prescription = {
-    id: 'RX-NABHA-849201',
+    id: 'RX-SL-849201',
     consultationId: 'c-101',
     patientId: currentRecord?.id || 'pat-101',
     patientName: currentRecord?.name || 'Gurpreet Singh',
@@ -43,8 +43,8 @@ export const PrescriptionView: React.FC = () => {
         inStock: true,
       },
     ],
-    followUpDate: 'In 3 Days at Civil Hospital Nabha',
-    qrCodeData: 'https://sehatlink.nabha.gov.in/rx/RX-NABHA-849201',
+    followUpDate: 'In 3 Days at Civil Hospital',
+    qrCodeData: 'https://sehatlink.gov.in/rx/RX-SL-849201',
     issuedAt: new Date().toLocaleDateString('en-IN'),
     isSigned: true,
   };

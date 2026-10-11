@@ -62,14 +62,14 @@ def get_fallback_response(
         elif language == "pa":
             return (
                 "⚠️ **ਐਮਰਜੈਂਸੀ ਚੇਤਾਵਨੀ (EMERGENCY ALERT)**\n\n"
-                "ਤੁਹਾਡੇ ਲੱਛਣ ਗੰਭੀਰ ਹੋ ਸਕਦੇ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਤੁਰੰਤ **Nabha 108 ਐਂਬੂਲੈਂਸ** ਨੂੰ ਕਾਲ ਕਰੋ "
+                "ਤੁਹਾਡੇ ਲੱਛਣ ਗੰਭੀਰ ਹੋ ਸਕਦੇ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਤੁਰੰਤ **108 ਐਂਬੂਲੈਂਸ** ਨੂੰ ਕਾਲ ਕਰੋ "
                 "ਜਾਂ ਸਿਹਤ ਲਿੰਕ ਐਪ ਦੇ ਲਾਲ ਐਮਰਜੈਂਸੀ ਬਟਨ ਨੂੰ ਦਬਾਓ। ਨੇੜਲੇ ਸਰਕਾਰੀ ਹਸਪਤਾਲ ਨਾਭਾ ਵਿਖੇ ਸੰਪਰਕ ਕਰੋ।\n\n"
-                "(Emergency Alert: Symptoms appear critical. Call Nabha 108 Ambulance immediately.)"
+                "(Emergency Alert: Symptoms appear critical. Call 108 Ambulance immediately.)"
             )
         return (
             "⚠️ **EMERGENCY ALERT**\n\n"
-            "Your reported symptoms require urgent medical evaluation. Please contact **Nabha 108 Emergency Ambulance Service** "
-            "immediately or visit the nearest Government Civil Hospital / PHC in Nabha."
+            "Your reported symptoms require urgent medical evaluation. Please contact **108 Emergency Ambulance Service** "
+            "immediately or visit the nearest Government Civil Hospital / PHC."
         )
 
     if language == "ta":
@@ -100,7 +100,7 @@ def get_fallback_response(
         return (
             "Welcome! I am **Sehat Sahayak**, your AI Healthcare Assistant for SehatLink Rural Telemedicine.\n\n"
             "• **Symptom Triage**: Ask about common health concerns, vitals interpretation, or home care.\n"
-            "• **Generic Medicines**: Guidance on essential medications available at Jan Aushadhi Kendra, Nabha.\n"
+            "• **Generic Medicines**: Guidance on essential medications available at Jan Aushadhi Kendra.\n"
             "• **ASHA Support**: Guidance on recording vitals and prioritizing consultations.\n\n"
             "How can I assist you today?"
         )

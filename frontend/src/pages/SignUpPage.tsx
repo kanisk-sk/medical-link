@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SignUp, useAuth, useUser } from '@clerk/react';
 import { motion } from 'framer-motion';
+import { ShieldCheck, PhoneCall } from 'lucide-react';
 import { LanguageToggle } from '../components/common/LanguageToggle';
 import { StethoscopeLogo } from '../components/common/StethoscopeLogo';
 import { Card } from '../components/common/Card';
@@ -62,12 +63,51 @@ export const SignUpPage: React.FC = () => {
     <div className="min-h-screen bg-cream text-charcoal relative overflow-hidden">
       <div className="absolute inset-0 opacity-60 bg-paper-grain pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-4">
-          <Link to="/" className="flex items-center gap-2 text-denim font-bold font-serif">
-            <StethoscopeLogo size={36} animate={false} />
-            <span>{t('appName')}</span>
-          </Link>
-          <LanguageToggle />
+        <div className="flex flex-wrap justify-between items-center gap-3 mb-6 pb-3 border-b border-parchment-dark/60">
+          {/* Top Left: Logo, Subtitle & Network/Region Badges */}
+          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+            <Link to="/" className="flex items-center gap-2.5 text-denim font-bold font-serif group">
+              <StethoscopeLogo size={40} animate={false} />
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold font-serif text-brick leading-none tracking-tight group-hover:text-brick-dark transition-colors">
+                    {t('appName')}
+                  </span>
+                  <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-olive bg-olive/15 px-2 py-0.5 rounded-full border border-olive/30">
+                    Telehealth
+                  </span>
+                </div>
+                <span className="text-xs font-serif text-charcoal-light mt-0.5">
+                  Offline-First Rural Healthcare Platform
+                </span>
+              </div>
+            </Link>
+
+            <div className="hidden md:flex items-center gap-2 pl-4 border-l border-parchment-dark/60 text-xs font-serif">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-olive/15 text-olive-dark font-medium border border-olive/30 text-[11px]">
+                <span className="w-2 h-2 rounded-full bg-olive animate-pulse" />
+                Network Active
+              </span>
+
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-denim/10 text-denim font-medium border border-denim/20 text-[11px]">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                Rural Health Portal
+              </span>
+            </div>
+          </div>
+
+          {/* Top Right: Quick Actions & Language Toggle */}
+          <div className="flex items-center gap-3">
+            <Link
+              to="/emergency"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emergency-red/10 text-emergency-red hover:bg-emergency-red hover:text-white border border-emergency-red/30 text-xs font-serif font-bold transition-all shadow-xs"
+            >
+              <PhoneCall className="w-3.5 h-3.5 animate-bounce" />
+              <span>108 SOS</span>
+            </Link>
+
+            <LanguageToggle />
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 items-center min-h-[calc(100vh-110px)] pb-6">

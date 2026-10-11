@@ -21,7 +21,7 @@ export const PharmacyMap: React.FC<PharmacyMapProps> = ({ pharmacies }) => {
       mapRef.current = null;
     }
 
-    // Nabha, Punjab coordinates: 30.3752° N, 76.1528° E
+    // Punjab coordinates: 30.3752° N, 76.1528° E
     const map = L.map(containerRef.current).setView([30.3752, 76.1528], 13);
     mapRef.current = map;
 
@@ -74,7 +74,7 @@ export const PharmacyMap: React.FC<PharmacyMapProps> = ({ pharmacies }) => {
       <div className="bg-parchment px-4 py-2.5 border-b border-parchment-dark flex items-center justify-between">
         <h4 className="text-xs font-serif font-bold text-denim uppercase tracking-wider flex items-center gap-1.5">
           <MapPin className="w-4 h-4 text-brick" />
-          Geographic Pharmacy & Jan Aushadhi Map (Nabha Tehsil)
+          Geographic Pharmacy & Jan Aushadhi Map (Rural Region)
         </h4>
         <span className="text-[10px] font-mono text-olive font-bold flex items-center gap-1">
           <Navigation className="w-3 h-3 text-brick" /> Live GPS Markers

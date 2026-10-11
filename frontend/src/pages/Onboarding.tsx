@@ -21,7 +21,7 @@ export const Onboarding: React.FC = () => {
   const [age, setAge] = useState(profile?.age ? String(profile.age) : '60');
   const [gender, setGender] = useState(profile?.gender || 'Male');
   const [phone, setPhone] = useState(profile?.phone || user?.phoneNumbers[0]?.phoneNumber || '+91 98765 43210');
-  const [village, setVillage] = useState(profile?.village || 'Alhoran, Nabha');
+  const [village, setVillage] = useState(profile?.village || 'Alhoran');
   const [abhaId, setAbhaId] = useState(profile?.abhaId || '91-4820-1928-3741');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -93,7 +93,7 @@ export const Onboarding: React.FC = () => {
           />
 
           <Input
-            label="Village / Post Office (Nabha Block)"
+            label="Village / Post Office (Rural Block)"
             value={village}
             onChange={(e) => setVillage(e.target.value)}
             required

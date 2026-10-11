@@ -22,7 +22,7 @@ export function useSehatLinkIdentity() {
        'SehatLink Member');
 
   const phone = isDemoUser ? '+91 98765 43210' : (profile?.phone || user?.phoneNumbers[0]?.phoneNumber || '');
-  const village = profile?.village || 'Alhoran, Nabha';
+  const village = profile?.village || 'Alhoran';
   const abhaId = profile?.abhaId || '91-4820-1928-3741';
 
   return {

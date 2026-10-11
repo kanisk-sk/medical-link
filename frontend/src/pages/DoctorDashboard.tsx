@@ -46,10 +46,10 @@ export const DoctorDashboard: React.FC = () => {
       <div className="bg-denim text-white p-6 rounded-xl border-2 border-denim-dark shadow-vintage flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <span className="text-xs font-mono uppercase text-cream-light tracking-widest block">
-            DISTRICT TELEMEDICINE DASHBOARD • NABHA TEHSIL
+            DISTRICT TELEMEDICINE DASHBOARD • RURAL REGION
           </span>
           <h1 className="text-2xl font-bold font-serif text-white">Dr. Amanpreet Singh, MD</h1>
-          <p className="text-xs font-serif text-cream-light/80">Civil Hospital Nabha • OPD Tele-Consultation & Triage Desk</p>
+          <p className="text-xs font-serif text-cream-light/80">Civil Hospital • OPD Tele-Consultation & Triage Desk</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">

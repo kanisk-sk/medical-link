@@ -60,7 +60,7 @@ def generate_user_token(req: TokenRequestSchema):
         role=req.role,
         language=req.language,
         name=req.name or "Rural Citizen",
-        village=req.village or "Nabha, Punjab",
+        village=req.village or "Punjab",
         expires_minutes=expires_minutes
     )
     return TokenResponseSchema(
@@ -213,14 +213,14 @@ def get_quick_prompts(
                 QuickPromptItem(
                     id="p2_en",
                     label="Jan Aushadhi Generic Meds",
-                    prompt="What generic medicines for hypertension and diabetes are available at Jan Aushadhi Kendra, Nabha?",
+                    prompt="What generic medicines for hypertension and diabetes are available at Jan Aushadhi Kendra?",
                     category="dosage",
                     language="en"
                 ),
                 QuickPromptItem(
                     id="p3_en",
-                    label="Nabha 108 Ambulance",
-                    prompt="How can I dispatch Nabha 108 Ambulance for emergency hospital transfer?",
+                    label="108 Ambulance",
+                    prompt="How can I dispatch 108 Ambulance for emergency hospital transfer?",
                     category="emergency",
                     language="en"
                 ),
@@ -278,7 +278,7 @@ def get_quick_prompts(
         prompts.extend([
             QuickPromptItem(
                 id="d1",
-                label="Hypertension STG Nabha",
+                label="Hypertension STG Rural",
                 prompt="Provide standard treatment guidelines for Essential Hypertension in rural primary health centers.",
                 category="general",
                 language="en"

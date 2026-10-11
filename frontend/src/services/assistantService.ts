@@ -102,14 +102,14 @@ export async function fetchQuickPrompts(
       {
         id: 'fb2_en',
         label: 'Jan Aushadhi Generic Meds',
-        prompt: 'What essential medicines are in stock at Jan Aushadhi Kendra Nabha?',
+        prompt: 'What essential medicines are in stock at Jan Aushadhi Kendra?',
         category: 'dosage',
         language: 'en'
       },
       {
         id: 'fb3_en',
-        label: 'Nabha 108 Emergency',
-        prompt: 'How to request urgent Nabha 108 ambulance dispatch?',
+        label: '108 Emergency',
+        prompt: 'How to request urgent 108 ambulance dispatch?',
         category: 'emergency',
         language: 'en'
       }

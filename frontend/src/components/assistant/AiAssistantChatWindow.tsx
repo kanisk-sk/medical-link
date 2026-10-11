@@ -109,7 +109,7 @@ export const AiAssistantChatWindow: React.FC<AiAssistantChatWindowProps> = ({
               </span>
             </div>
             <p className="text-[11px] text-cream-light/80 font-sans">
-              {getRoleTitle(userRole)} • Nabha Health
+              {getRoleTitle(userRole)} • Rural Health
             </p>
           </div>
         </div>

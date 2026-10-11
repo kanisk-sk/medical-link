@@ -3,7 +3,7 @@
 # 🏥 SehatLink (ਸਿਹਤ ਲਿੰਕ)
 ### *Offline Telemedicine & AI Health Assistant for Rural India*
 
-**Smart India Hackathon Prototype • Nabha Tehsil, Punjab**
+**Smart India Hackathon Prototype • Rural Region, Punjab**
 
 ---
 
@@ -24,7 +24,7 @@ In many rural villages across India, getting medical care is a major challenge:
 ## 🎨 Designed for Rural Trust (No Sci-Fi Jargon)
 
 Unlike cold corporate tech apps with neon blue gradients and complex menus, SehatLink uses a **warm, vintage healthcare design**:
-- **Classic Paper & Clinic Look**: Warm parchment colors, wooden card borders, serif headings, and official stamp badges ("ਸਿਹਤ ਸਹਾਇਕ • NABHA 2026").
+- **Classic Paper & Clinic Look**: Warm parchment colors, wooden card borders, serif headings, and official stamp badges ("ਸਿਹਤ ਸਹਾਇਕ • 2026").
 - **Familiar & Respectful Tone**: Speaks warmly like a trusted village doctor or family physician.
 - **Easy for Everyone**: Big visual buttons, high contrast, and voice interaction so anyone can use it without prior technical knowledge.
 
@@ -47,12 +47,12 @@ Unlike cold corporate tech apps with neon blue gradients and complex menus, Seha
 - Everything is saved safely on the phone. As soon as the health worker enters an area with internet signal, all records **automatically sync** to the hospital server.
 
 ### 💊 4. Jan Aushadhi Generic Medicine Finder
-- Helps villagers find low-cost, high-quality generic medicines available at government Jan Aushadhi Kendras in Nabha.
+- Helps villagers find low-cost, high-quality generic medicines available at government Jan Aushadhi Kendras.
 - Displays generic equivalents (e.g., *Sorbitrate 5mg → Isosorbide Dinitrate 5mg*) saving families up to 80% on medicine bills.
 - Shows live stock availability on an interactive map.
 
 ### 🚑 5. One-Touch Emergency SOS Dispatch
-- In critical situations (severe chest pain, snake bites, stroke), pressing the red **Emergency SOS** button instantly shares the exact village GPS coordinates with **Nabha 108 Ambulance Units** and alerts the nearest hospital.
+- In critical situations (severe chest pain, snake bites, stroke), pressing the red **Emergency SOS** button instantly shares the exact village GPS coordinates with **108 Ambulance Units** and alerts the nearest hospital.
 - Provides immediate, easy-to-follow first-aid steps on screen while the ambulance is on its way.
 
 ### 💳 6. Digital QR Health Card (ABHA Linked)
@@ -66,16 +66,16 @@ Unlike cold corporate tech apps with neon blue gradients and complex menus, Seha
 | :--- | :--- |
 | **👩‍🌾 Patient Portal** | Speak symptoms, book remote doctor consultations, view prescriptions, and open their QR Health Card. |
 | **🩺 ASHA Health Worker** | Perform door-to-door village health checks, record clinical vitals, attach photos/voice notes, and sync offline data. |
-| **👨‍⚕️ Remote Doctor** | View incoming patient cases sorted by priority, start video/audio calls, write digital e-prescriptions, and refer urgent cases to Civil Hospital Nabha. |
+| **👨‍⚕️ Remote Doctor** | View incoming patient cases sorted by priority, start video/audio calls, write digital e-prescriptions, and refer urgent cases to Civil Hospital. |
 | **💊 Pharmacy Store** | Manage generic medicine stock, view reservation requests, and help patients find affordable medicine alternatives. |
-| **📊 District Admin** | View an interactive map showing disease trends across Nabha villages (like fever or Dengue outbreaks) to dispatch medical aid quickly. |
+| **📊 District Admin** | View an interactive map showing disease trends across Rural villages (like fever or Dengue outbreaks) to dispatch medical aid quickly. |
 
 ---
 
 ## ⏱️ How to Try the Demo (In 1 Minute)
 
 ### Step 1: Open the Application
-Open `http://localhost:5173` in your web browser.
+Open `http://localhost:3000` in your web browser.
 
 ### Step 2: Use One-Click Demo Credentials
 On the Login screen, click **"🚀 Enter as Dummy Patient"** or use these test details:
@@ -107,5 +107,5 @@ npm run dev
 ---
 
 <div align="center">
-  <sub>SehatLink — Empowering Rural Healthcare Access in Nabha Tehsil, Punjab.</sub>
+  <sub>SehatLink — Empowering Rural Healthcare Access in Rural Region, Punjab.</sub>
 </div>

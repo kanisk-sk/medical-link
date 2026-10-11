@@ -30,7 +30,7 @@ export const EmergencyPage: React.FC = () => {
 
         <div>
           <h1 className="text-3xl font-bold font-serif text-emergency-red tracking-wider uppercase">
-            🚑 {t('emergency.title')} (Nabha 108 SOS)
+            🚑 {t('emergency.title')} (108 SOS)
           </h1>
           <p className="text-xs font-serif text-charcoal font-semibold mt-1">
             Instant GPS Location Sharing & 108 Ambulance Command Unit Dispatch
@@ -49,7 +49,7 @@ export const EmergencyPage: React.FC = () => {
             <div className="bg-warm-white p-4 rounded-lg border border-parchment-dark text-xs font-mono text-charcoal space-y-1.5 shadow-inner">
               <p className="flex items-center gap-2">
                 <Radio className="w-4 h-4 text-emergency-red animate-pulse" />
-                <b>Unit Dispatched:</b> Nabha 108 Emergency Unit #PB-11-7482
+                <b>Unit Dispatched:</b> 108 Emergency Unit #PB-11-7482
               </p>
               <p className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-olive" />
@@ -57,7 +57,7 @@ export const EmergencyPage: React.FC = () => {
               </p>
               <p className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-brick" />
-                <b>GPS Coords:</b> 30.3752° N, 76.1528° E ({village}, Nabha Tehsil)
+                <b>GPS Coords:</b> 30.3752° N, 76.1528° E ({village}, Rural Region)
               </p>
             </div>
           </div>

@@ -17,7 +17,7 @@ export const InventoryList: React.FC<InventoryListProps> = ({ items, onReserve }
   if (items.length === 0) {
     return (
       <Card variant="paper" className="p-8 text-center text-charcoal-light">
-        <p className="font-serif">No matching medicines found in nearby Nabha pharmacies.</p>
+        <p className="font-serif">No matching medicines found in nearby Rural pharmacies.</p>
       </Card>
     );
   }

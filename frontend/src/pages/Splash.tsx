@@ -87,7 +87,7 @@ export const Splash: React.FC = () => {
     {
       label: isTa ? 'இணைக்கப்பட்ட கிராமங்கள்' : 'Connected Villages',
       val: isTa ? '48 கிராமங்கள்' : '48 Villages',
-      sub: isTa ? 'நபாத தாலுகா, பஞ்சாப்' : 'Nabha Tehsil, Punjab'
+      sub: isTa ? 'நபாத தாலுகா, பஞ்சாப்' : 'Rural Region, Punjab'
     },
     {
       label: isTa ? 'மக்கள் மருந்தகங்கள்' : 'Jan Aushadhi Stores',
@@ -102,7 +102,7 @@ export const Splash: React.FC = () => {
     {
       label: isTa ? '108 அவசர ஆம்புலன்ஸ்' : 'Emergency 108 ETA',
       val: isTa ? '< 8 நிமிடங்கள்' : '< 8 Minutes',
-      sub: isTa ? 'ஆம்புலன்ஸ் சேவை' : 'Nabha Ambulance Unit'
+      sub: isTa ? 'ஆம்புலன்ஸ் சேவை' : 'Ambulance Unit'
     }
   ];
 
@@ -165,7 +165,7 @@ export const Splash: React.FC = () => {
             <p className="text-base sm:text-lg font-serif text-charcoal-light leading-relaxed">
               {isTa
                 ? 'குரல் வழி AI பரிசோதனை, ASHA பணியாளர்களின் நேரடி உடல்நலப் பரிசோதனை, டிஜிட்டል மருந்துச்சீட்டுகள் மற்றும் மக்கள் மருந்தக இருப்பு நிலை மூலம் கிராமப்புற மருத்துவ இடைவெளியைக் குறைக்கிறோம்—இணைய சமிக்ஞை இல்லாத போதும்.'
-                : 'Bridging the healthcare gap in Nabha through voice-assisted AI triage, door-to-door ASHA worker intakes, digital prescriptions, and local Jan Aushadhi pharmacy inventory—even without active internet.'}
+                : 'Bridging the healthcare gap locally through voice-assisted AI triage, door-to-door ASHA worker intakes, digital prescriptions, and local Jan Aushadhi pharmacy inventory—even without active internet.'}
             </p>
 
             {/* Quick Hero Features */}
@@ -213,7 +213,7 @@ export const Splash: React.FC = () => {
                 icon={<PhoneCall className="w-5 h-5 text-emergency-red animate-bounce" />}
                 onClick={() => navigate('/patient/emergency')}
               >
-                {isTa ? '108 அவசர ஆம்புலன்ஸ்' : 'Nabha 108 SOS'}
+                {isTa ? '108 அவசர ஆம்புலன்ஸ்' : '108 SOS'}
               </Button>
             </div>
           </motion.div>
@@ -229,7 +229,7 @@ export const Splash: React.FC = () => {
             <div className="flex items-center justify-between border-b-2 border-vintage-gold pb-3 mb-4">
               <div>
                 <span className="text-[10px] font-mono tracking-widest text-olive uppercase block">
-                  {isTa ? 'அரசு தலைமை மருத்துவமனை • நபாத' : 'GOVERNMENT CIVIL HOSPITAL • NABHA'}
+                  {isTa ? 'அரசு தலைமை மருத்துவமனை • நபாத' : 'GOVERNMENT CIVIL HOSPITAL'}
                 </span>
                 <h3 className="font-serif font-bold text-xl text-denim">
                   {isTa ? 'சுகாதார சேவைகள் (Health Services)' : 'Health Services'}
@@ -293,7 +293,7 @@ export const Splash: React.FC = () => {
                       {isTa ? 'மக்கள் மருந்தகம்' : 'Jan Aushadhi Pharmacy Search'}
                     </p>
                     <p className="text-[11px] text-charcoal-light">
-                      {isTa ? 'குறைந்த விலை மாற்று மருந்துகளைத் தேடுங்கள்' : 'Find generic stock in Nabha kendras'}
+                      {isTa ? 'குறைந்த விலை மாற்று மருந்துகளைத் தேடுங்கள்' : 'Find generic stock in local kendras'}
                     </p>
                   </div>
                 </div>
@@ -389,14 +389,14 @@ export const Splash: React.FC = () => {
               <p className="text-sm font-serif text-charcoal-light leading-relaxed">
                 {isTa
                   ? '"இணைய சமிக்ஞை இல்லாத இடங்களிலும் நோயாளிகளின் உடல் அளவீடுகளைப் பதிவு செய்ய SehatLink உதவுகிறது. இணையம் வந்தவுடன் அனைத்துத் தகவல்களும் தாமாகவே ஒருங்கிணைக்கப்படுகின்றன."'
-                  : '"SehatLink allows us to capture patient vitals during home visits even when there is no mobile signal. Once we reach the main road, all records sync automatically to Dr. Amanpreet in Nabha."'}
+                  : '"SehatLink allows us to capture patient vitals during home visits even when there is no mobile signal. Once we reach the main road, all records sync automatically to Dr. Amanpreet locally."'}
               </p>
               <div className="pt-2">
                 <p className="font-serif font-bold text-sm text-denim">
                   {isTa ? 'ஹர்ப்ரீத் கவுர்' : 'Harpreet Kaur'}
                 </p>
                 <p className="text-xs text-olive font-serif">
-                  {isTa ? 'தலைமை ASHA பணியாளர் • Nabha' : 'Lead ASHA Worker • Nabha Sector 3'}
+                  {isTa ? 'தலைமை ASHA பணியாளர் • Rural' : 'Lead ASHA Worker • Sector 3'}
                 </p>
               </div>
             </div>
@@ -417,7 +417,7 @@ export const Splash: React.FC = () => {
                   <span className="text-olive">•</span>{' '}
                   {isTa
                     ? '108 GPS ஆம்புலன்ஸ் சேவை மூலமாக உடனடி அவசர உதவி.'
-                    : 'Instant emergency dispatch with Nabha 108 GPS unit tracking.'}
+                    : 'Instant emergency dispatch with 108 GPS unit tracking.'}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-olive">•</span>{' '}
@@ -442,7 +442,7 @@ const LinkToEmergency: React.FC<{ isTa?: boolean }> = ({ isTa }) => {
       className="bg-emergency-red hover:bg-red-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold font-serif flex items-center space-x-1 shadow-sm transition-transform active:scale-95 cursor-pointer"
     >
       <PhoneCall className="w-4 h-4 animate-bounce" />
-      <span className="hidden sm:inline">{isTa ? '108 அவசர உதவி' : 'Nabha 108 Emergency'}</span>
+      <span className="hidden sm:inline">{isTa ? '108 அவசர உதவி' : '108 Emergency'}</span>
     </button>
   );
 };

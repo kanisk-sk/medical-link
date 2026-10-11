@@ -31,7 +31,7 @@ export const ConsultationPage: React.FC = () => {
     setTimeout(() => {
       setReferralSent(false);
       setShowReferralModal(false);
-      alert('Emergency Hospital Referral transmitted to Govt Civil Hospital Nabha!');
+      alert('Emergency Hospital Referral transmitted to Govt Civil Hospital!');
     }, 1500);
   };
 
@@ -41,7 +41,7 @@ export const ConsultationPage: React.FC = () => {
       <div className="bg-cream-light p-4 rounded-xl border-2 border-parchment-dark shadow-vintage flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
         <div>
           <span className="text-[10px] font-mono uppercase text-olive font-bold">
-            LIVE RURAL TELE-CONSULTATION SESSION • NABHA SECTOR 3
+            LIVE RURAL TELE-CONSULTATION SESSION • SECTOR 3
           </span>
           <h2 className="text-xl font-serif font-bold text-charcoal">
             {currentRecord?.name || 'Gurpreet Singh'} (60y, Male)
@@ -115,7 +115,7 @@ export const ConsultationPage: React.FC = () => {
         >
           <div className="space-y-4 font-serif text-xs">
             <div className="bg-parchment p-3 rounded-lg border border-parchment-dark">
-              <p className="font-bold text-denim">Target Facility: Government Civil Hospital, Nabha</p>
+              <p className="font-bold text-denim">Target Facility: Government Civil Hospital</p>
               <p className="text-charcoal-light mt-0.5">Patient: Gurpreet Singh (60y, Male) • SpO2 88%</p>
             </div>
 

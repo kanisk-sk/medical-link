@@ -101,7 +101,7 @@ export const VillageHeatmap: React.FC = () => {
       <div className="bg-parchment px-4 py-2.5 border-b border-parchment-dark flex items-center justify-between">
         <h4 className="text-xs font-serif font-bold text-denim uppercase tracking-wider flex items-center gap-1.5">
           <Activity className="w-4 h-4 text-brick animate-pulse" />
-          Nabha Rural Disease Outbreak Heatmap
+          Rural Rural Disease Outbreak Heatmap
         </h4>
         <div className="flex items-center gap-2 text-[10px] font-mono font-bold">
           <span className="flex items-center gap-1 text-emergency-red">● High Risk</span>

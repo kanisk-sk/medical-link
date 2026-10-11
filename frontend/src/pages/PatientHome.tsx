@@ -34,7 +34,7 @@ export const PatientHome: React.FC = () => {
     {
       id: 'apt-1',
       doctorName: 'Dr. Amanpreet Singh (MD Internal Medicine)',
-      clinic: 'Nabha Rural Health Center',
+      clinic: 'Rural Rural Health Center',
       date: 'Today, 11:30 AM',
       type: 'Tele-Consultation Queue',
       status: 'Confirmed'
@@ -42,7 +42,7 @@ export const PatientHome: React.FC = () => {
     {
       id: 'apt-2',
       doctorName: 'Dr. Neha Sharma (Pediatrician)',
-      clinic: 'Civil Hospital Nabha',
+      clinic: 'Civil Hospital',
       date: '12 Aug 2026, 10:00 AM',
       type: 'Follow-up Review',
       status: 'Scheduled'
@@ -56,7 +56,7 @@ export const PatientHome: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <span className="text-xs font-mono uppercase text-olive font-bold tracking-wider">
-              SEHATLINK RURAL PATIENT PORTAL • NABHA TEHSIL
+              SEHATLINK RURAL PATIENT PORTAL • RURAL REGION
             </span>
             <h1 className="text-2xl md:text-3xl font-bold font-serif text-charcoal">
               Sat Sri Akal, {name} ji!
@@ -162,10 +162,10 @@ export const PatientHome: React.FC = () => {
             </div>
             <div>
               <h3 className="text-2xl font-bold font-serif tracking-wide uppercase">
-                🚑 {t('actions.emergency')} (Nabha 108 SOS)
+                🚑 {t('actions.emergency')} (108 SOS)
               </h3>
               <p className="text-xs font-serif text-white/90 mt-1">
-                Instant GPS village dispatch to Nabha Civil Hospital & Ambulance Unit
+                Instant GPS village dispatch to Civil Hospital & Ambulance Unit
               </p>
             </div>
           </div>
@@ -295,7 +295,7 @@ export const PatientHome: React.FC = () => {
             age: 60,
             gender: 'Male',
             phone: '+91 98765 43210',
-            village: village || 'Alhoran, Nabha',
+            village: village || 'Alhoran',
             abhaId: abhaId || '91-4820-1928-3741',
             priority: 'HIGH',
             status: 'waiting',

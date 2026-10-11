@@ -32,7 +32,7 @@ class ChatSyncResponseSchema(BaseModel):
     message: ChatMessageSchema
     language: str = "pa"
     emergency_detected: bool = False
-    disclaimer: str = "ਇਹ ਇੱਕ AI ਸਹਾਇਕ ਹੈ। ਐਮਰਜੈਂਸੀ ਲਈ Nabha 108 ਜਾਂ ਨੇੜਲੇ ਸਰਕਾਰੀ ਹਸਪਤਾਲ ਵਿੱਚ ਸੰਪਰਕ ਕਰੋ। (This is an AI assistant. For emergencies, contact Nabha 108 or nearest Govt Hospital.)"
+    disclaimer: str = "ਇਹ ਇੱਕ AI ਸਹਾਇਕ ਹੈ। ਐਮਰਜੈਂਸੀ ਲਈ 108 ਜਾਂ ਨੇੜਲੇ ਸਰਕਾਰੀ ਹਸਪਤਾਲ ਵਿੱਚ ਸੰਪਰਕ ਕਰੋ। (This is an AI assistant. For emergencies, contact 108 or nearest Govt Hospital.)"
     usage: Optional[UsageStats] = None
 
 class QuickPromptItem(BaseModel):
@@ -47,7 +47,7 @@ class TokenRequestSchema(BaseModel):
     role: str = "patient"
     language: str = "pa"
     name: Optional[str] = "Rural Citizen"
-    village: Optional[str] = "Nabha Village"
+    village: Optional[str] = "Rural Village"
 
 class TokenResponseSchema(BaseModel):
     access_token: str

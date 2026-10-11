@@ -86,7 +86,7 @@ export const useAuthStore = create<AuthState>()(
           abhaId: '91-4820-1928-3741',
           age: 60,
           gender: 'Male',
-          village: 'Alhoran, Nabha'
+          village: 'Alhoran'
         };
 
         set((state) => ({

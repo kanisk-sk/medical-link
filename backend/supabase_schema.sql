@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS prescriptions (
     patient_id VARCHAR REFERENCES patients(id) ON DELETE CASCADE,
     doctor_name VARCHAR NOT NULL,
     doctor_license VARCHAR,
-    hospital_name VARCHAR DEFAULT 'Government Civil Hospital, Nabha',
+    hospital_name VARCHAR DEFAULT 'Government Civil Hospital',
     diagnosis TEXT,
     medications_json TEXT, -- JSON Array of medication items
     qr_code_url VARCHAR,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS emergency_alerts (
     lat FLOAT,
     lng FLOAT,
     status VARCHAR DEFAULT 'dispatched',
-    ambulance_unit VARCHAR DEFAULT 'Nabha 108 Dispatch Unit #4',
+    ambulance_unit VARCHAR DEFAULT '108 Dispatch Unit #4',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -112,17 +112,17 @@ CREATE TABLE IF NOT EXISTS emergency_alerts (
 
 -- Seed Demo Login User (dummy@gmail.com / user12345)
 INSERT INTO users (id, email, password_hash, name, phone, role, language, village)
-VALUES ('usr_dummy_101', 'dummy@gmail.com', 'user12345_hash', 'Gurpreet Singh', '+91 98765 43210', 'patient', 'ta', 'Alhoran, Nabha')
+VALUES ('usr_dummy_101', 'dummy@gmail.com', 'user12345_hash', 'Gurpreet Singh', '+91 98765 43210', 'patient', 'ta', 'Alhoran')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed Doctor User
 INSERT INTO users (id, email, password_hash, name, phone, role, language, village)
-VALUES ('usr_doc_201', 'dr.amanpreet@sehatlink.gov.in', 'doc12345_hash', 'Dr. Amanpreet Singh (MD)', '+91 98123 45678', 'doctor', 'en', 'Nabha Sector 1')
+VALUES ('usr_doc_201', 'dr.amanpreet@sehatlink.gov.in', 'doc12345_hash', 'Dr. Amanpreet Singh (MD)', '+91 98123 45678', 'doctor', 'en', 'Sector 1')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed Patient & ABHA Card
 INSERT INTO patients (id, user_id, name, abha_id, abha_address, age, gender, village, blood_group, phone, emergency_contact, qr_code_data)
-VALUES ('pat_101', 'usr_dummy_101', 'Gurpreet Singh', '91-4820-1928-3741', 'gurpreet.singh@abdm', 60, 'Male', 'Alhoran, Nabha', 'O+', '+91 98765 43210', '+91 98765 00000', 'ABHA:91-4820-1928-3741|NAME:Gurpreet Singh|AGE:60|VILLAGE:Alhoran')
+VALUES ('pat_101', 'usr_dummy_101', 'Gurpreet Singh', '91-4820-1928-3741', 'gurpreet.singh@abdm', 60, 'Male', 'Alhoran', 'O+', '+91 98765 43210', '+91 98765 00000', 'ABHA:91-4820-1928-3741|NAME:Gurpreet Singh|AGE:60|VILLAGE:Alhoran')
 ON CONFLICT (id) DO NOTHING;
 
 -- Seed Doctor Appointment
@@ -132,5 +132,5 @@ ON CONFLICT (id) DO NOTHING;
 
 -- Seed Digital Prescription
 INSERT INTO prescriptions (id, consultation_id, patient_id, doctor_name, doctor_license, hospital_name, diagnosis, medications_json, digital_signature)
-VALUES ('rx_501', 'apt_401', 'pat_101', 'Dr. Amanpreet Singh (MD)', 'PMC-2018-84920', 'Government Civil Hospital, Nabha', 'Acute Bronchitis & Mild Hypoxia', '[{"name":"Paracetamol 500mg","dosage":"1 tablet twice daily after food","duration":"5 days"},{"name":"Amoxicillin 500mg","dosage":"1 capsule 3 times daily","duration":"7 days"}]', 'SIG_AMANPREET_VERIFIED_84920')
+VALUES ('rx_501', 'apt_401', 'pat_101', 'Dr. Amanpreet Singh (MD)', 'PMC-2018-84920', 'Government Civil Hospital', 'Acute Bronchitis & Mild Hypoxia', '[{"name":"Paracetamol 500mg","dosage":"1 tablet twice daily after food","duration":"5 days"},{"name":"Amoxicillin 500mg","dosage":"1 capsule 3 times daily","duration":"7 days"}]', 'SIG_AMANPREET_VERIFIED_84920')
 ON CONFLICT (id) DO NOTHING;

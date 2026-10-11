@@ -25,7 +25,7 @@ export const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
           <StethoscopeLogo size={44} animate={false} />
           <div>
             <h2 className="text-xl font-bold font-serif text-denim tracking-wide">
-              CIVIL TELE-HOSPITAL, NABHA
+              CIVIL TELE-HOSPITAL, RURAL
             </h2>
             <p className="text-xs font-mono text-charcoal-light">
               Govt Health Services • ABDM Telemedicine Portal

@@ -25,7 +25,7 @@ export const VideoPanel: React.FC = () => {
                 <Stethoscope className="w-12 h-12 text-cream" />
               </div>
               <h3 className="text-xl font-serif font-bold">Dr. Amanpreet Singh</h3>
-              <p className="text-xs font-mono text-cream-light/80">Civil Hospital, Nabha • MD Medicine</p>
+              <p className="text-xs font-mono text-cream-light/80">Civil Hospital, Rural • MD Medicine</p>
               <div className="mt-3 inline-flex items-center space-x-2 bg-black/40 px-3 py-1 rounded-full text-xs font-mono text-green-400 border border-green-500/30">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
                 <span>WebRTC Live Stream (720p)</span>

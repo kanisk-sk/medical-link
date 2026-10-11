@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { StethoscopeLogo } from '../common/StethoscopeLogo';
 import { LanguageToggle } from '../common/LanguageToggle';
-import { ArrowLeft, PhoneCall } from 'lucide-react';
+import { ArrowLeft, PhoneCall, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UserButton, useAuth, useUser } from '@clerk/react';
 import { Button } from '../common/Button';
@@ -37,14 +37,28 @@ export const Header: React.FC = () => {
             <Link to="/home" className="flex items-center space-x-2.5 group">
               <StethoscopeLogo size={36} animate={false} />
               <div>
-                <span className="text-xl font-bold font-serif text-brick tracking-tight group-hover:text-brick-dark transition-colors">
-                  {t('appName')}
-                </span>
-                <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-olive ml-2 bg-olive/10 px-1.5 py-0.5 rounded border border-olive/20">
-                  TELEHEALTH
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold font-serif text-brick tracking-tight group-hover:text-brick-dark transition-colors">
+                    {t('appName')}
+                  </span>
+                  <span className="hidden sm:inline-block text-[10px] uppercase font-mono tracking-widest text-olive bg-olive/10 px-1.5 py-0.5 rounded border border-olive/20">
+                    TELEHEALTH
+                  </span>
+                </div>
               </div>
             </Link>
+
+            <div className="hidden md:flex items-center gap-2 pl-3 border-l border-parchment-dark/60 text-xs font-serif">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-olive/15 text-olive-dark font-medium border border-olive/30 text-[11px]">
+                <span className="w-2 h-2 rounded-full bg-olive animate-pulse" />
+                Network Active
+              </span>
+
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-denim/10 text-denim font-medium border border-denim/20 text-[11px]">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                Rural Health Portal
+              </span>
+            </div>
           </div>
 
           {/* Right section: Role switcher, Language toggle, Emergency trigger */}

@@ -21,7 +21,7 @@ export const HelpPage: React.FC = () => {
     },
     {
       q: 'How do I find medicines at nearby Jan Aushadhi Kendras?',
-      a: 'Go to the "Find Medicine" page. Type your prescribed medicine name. You will see a list and map of nearby pharmacies in Nabha showing live stock status (In Stock / Low Stock / Out of Stock).',
+      a: 'Go to the "Find Medicine" page. Type your prescribed medicine name. You will see a list and map of nearby pharmacies locally showing live stock status (In Stock / Low Stock / Out of Stock).',
     },
   ];
 

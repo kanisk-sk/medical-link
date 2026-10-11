@@ -18,7 +18,7 @@ export const QRHealthCard: React.FC<QRHealthCardProps> = ({ patient }) => {
     name: patient.name,
     village: patient.village,
     priority: patient.priority,
-    issued: 'Nabha Rural PHC'
+    issued: 'Rural PHC'
   });
 
   const handlePrint = () => {
@@ -112,7 +112,7 @@ export const QRHealthCard: React.FC<QRHealthCardProps> = ({ patient }) => {
               <div className="pt-2 flex justify-between items-start">
                 <div>
                   <p className="font-bold text-charcoal">Covid Booster Vaccination</p>
-                  <p className="text-[11px] text-charcoal-light">Nabha Civil Hospital</p>
+                  <p className="text-[11px] text-charcoal-light">Civil Hospital</p>
                 </div>
                 <span className="font-mono text-[10px] text-olive font-bold">14 Jan 2025</span>
               </div>

@@ -57,7 +57,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const rxId = 'RX-NABHA-' + Math.floor(100000 + Math.random() * 900000);
+    const rxId = 'RX-RURAL-' + Math.floor(100000 + Math.random() * 900000);
     const newRx: Prescription = {
       id: rxId,
       consultationId: 'c-101',
@@ -68,7 +68,7 @@ export const PrescriptionEditor: React.FC<PrescriptionEditorProps> = ({
       diagnosis,
       medications,
       followUpDate: 'In 3 Days',
-      qrCodeData: `https://sehatlink.nabha.gov.in/rx/${rxId}`,
+      qrCodeData: `https://sehatlink.gov.in/rx/${rxId}`,
       issuedAt: new Date().toLocaleDateString('en-IN'),
       isSigned: true,
     };

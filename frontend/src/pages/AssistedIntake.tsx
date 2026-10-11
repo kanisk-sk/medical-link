@@ -78,7 +78,7 @@ export const AssistedIntake: React.FC = () => {
         id: `vit-${Date.now()}`,
         patientId: currentRecord?.id || 'pat-101',
         patientName: currentRecord?.name || 'Gurpreet Singh',
-        village: currentRecord?.village || 'Alhoran, Nabha',
+        village: currentRecord?.village || 'Alhoran',
         ...vitalsData,
         synced: isOnline
       });
@@ -107,7 +107,7 @@ export const AssistedIntake: React.FC = () => {
     setSyncing(true);
     setTimeout(() => {
       setSyncing(false);
-      alert('All pending ASHA offline records synced with Nabha Central Server!');
+      alert('All pending ASHA offline records synced with Rural Central Server!');
     }, 1200);
   };
 
@@ -157,7 +157,7 @@ export const AssistedIntake: React.FC = () => {
               <h3 className="font-serif font-bold text-base text-charcoal">
                 {currentRecord?.name || 'Gurpreet Singh'} ({currentRecord?.age || 60}y, {currentRecord?.gender || 'Male'})
               </h3>
-              <p className="text-xs font-serif text-charcoal-light">Village: {currentRecord?.village || 'Alhoran, Nabha'}</p>
+              <p className="text-xs font-serif text-charcoal-light">Village: {currentRecord?.village || 'Alhoran'}</p>
             </div>
             <span className="px-2 py-1 bg-emergency-red text-white text-[10px] font-serif font-bold uppercase rounded">
               High Risk

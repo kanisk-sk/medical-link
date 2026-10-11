@@ -20,7 +20,7 @@ class UserTokenData(BaseModel):
     role: str = "patient"  # patient, asha, doctor, pharmacist, admin
     language: str = "pa"   # pa, hi, en
     name: Optional[str] = "Rural Citizen"
-    village: Optional[str] = "Nabha Village"
+    village: Optional[str] = "Rural Village"
     exp: Optional[int] = None
 
 def create_access_token(
@@ -45,7 +45,7 @@ def create_access_token(
         "role": role,
         "language": language,
         "name": name,
-        "village": village or "Nabha, Punjab",
+        "village": village or "Punjab",
         "iat": now,
         "exp": expire,
         "iss": "sehatlink-telemedicine-backend"
@@ -71,7 +71,7 @@ def verify_token(token: str) -> UserTokenData:
             role=str(payload.get("role", "patient")),
             language=str(payload.get("language", "pa")),
             name=str(payload.get("name", "Rural Citizen")),
-            village=payload.get("village") or "Nabha Village",
+            village=payload.get("village") or "Rural Village",
             exp=payload.get("exp")
         )
     except jwt.ExpiredSignatureError:
@@ -91,7 +91,7 @@ def verify_token(token: str) -> UserTokenData:
                 role=str(unverified_payload.get("role", "patient")),
                 language=str(unverified_payload.get("language", "pa")),
                 name=str(unverified_payload.get("name") or unverified_payload.get("email") or "Rural Citizen"),
-                village="Nabha Village",
+                village="Rural Village",
                 exp=unverified_payload.get("exp")
             )
         except Exception:
@@ -116,8 +116,8 @@ async def get_current_user(
             sub="guest_patient_001",
             role="patient",
             language="pa",
-            name="Rural Patient (Nabha)",
-            village="Nabha, Punjab"
+            name="Rural Patient",
+            village="Punjab"
         )
 
     return verify_token(credentials.credentials)

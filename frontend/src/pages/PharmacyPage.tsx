@@ -18,7 +18,7 @@ const mockPharmacies: PharmacyItem[] = [
     quantity: 45,
     priceInINR: 12.5,
     pharmacyName: 'Jan Aushadhi Kendra (Govt Hospital)',
-    pharmacyAddress: 'Near Circular Road, Nabha',
+    pharmacyAddress: 'Near Circular Road, Rural',
     distanceKm: 0.8,
     contactNumber: '+91 98140 12345',
   },
@@ -31,7 +31,7 @@ const mockPharmacies: PharmacyItem[] = [
     quantity: 120,
     priceInINR: 8.0,
     pharmacyName: 'Jan Aushadhi Kendra (Govt Hospital)',
-    pharmacyAddress: 'Near Circular Road, Nabha',
+    pharmacyAddress: 'Near Circular Road, Rural',
     distanceKm: 0.8,
     contactNumber: '+91 98140 12345',
   },
@@ -56,8 +56,8 @@ const mockPharmacies: PharmacyItem[] = [
     stockStatus: 'out_of_stock',
     quantity: 0,
     priceInINR: 110.0,
-    pharmacyName: 'Nabha Rural Pharmacy Store',
-    pharmacyAddress: 'Alhoran Road, Nabha',
+    pharmacyName: 'Rural Rural Pharmacy Store',
+    pharmacyAddress: 'Alhoran Road, Rural',
     distanceKm: 1.5,
     contactNumber: '+91 98720 54321',
   },
@@ -97,7 +97,7 @@ export const PharmacyPage: React.FC = () => {
           {t('pharmacy.title')}
         </h1>
         <p className="text-xs font-serif text-charcoal-light">
-          Real-time stock checking across Jan Aushadhi Kendras & private outlets in Nabha Tehsil
+          Real-time stock checking across Jan Aushadhi Kendras & private outlets in Rural Region
         </p>
       </div>
 

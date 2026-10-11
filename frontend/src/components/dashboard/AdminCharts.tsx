@@ -57,7 +57,7 @@ export const AdminCharts: React.FC = () => {
         <div className="flex items-center justify-between border-b border-parchment-dark pb-3 mb-4">
           <div>
             <h3 className="text-base font-serif font-bold text-denim">Symptom Distribution & Outbreak Monitoring</h3>
-            <p className="text-xs font-mono text-charcoal-light">Nabha Block • Real-time Data (DPDP De-identified)</p>
+            <p className="text-xs font-mono text-charcoal-light">Rural Block • Real-time Data (DPDP De-identified)</p>
           </div>
           <span className="text-xs font-mono bg-brick/10 text-brick px-2.5 py-1 rounded border border-brick/30 font-bold">
             ⚠ Outbreak Alert: Fever Spike in Village Bhadson

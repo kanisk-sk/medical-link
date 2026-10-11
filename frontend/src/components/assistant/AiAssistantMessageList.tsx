@@ -135,7 +135,7 @@ export const AiAssistantMessageList: React.FC<AiAssistantMessageListProps> = ({
                       className="mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 bg-emergency-red text-white rounded text-xs font-bold hover:bg-red-700 transition"
                     >
                       <PhoneCall className="w-3.5 h-3.5" />
-                      <span>{userLanguage === 'pa' ? 'Nabha 108 ਕਾਲ ਕਰੋ' : 'Call Nabha 108'}</span>
+                      <span>{userLanguage === 'pa' ? '108 ਕਾਲ ਕਰੋ' : 'Call 108'}</span>
                     </a>
                   </div>
                 </div>
