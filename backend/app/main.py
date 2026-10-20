@@ -43,11 +43,15 @@ app = FastAPI(
 # Include AI Assistant router
 app.include_router(assistant_router)
 
+configured_origins = [
+    origin.strip().rstrip("/")
+    for origin in settings.CORS_ORIGINS.split(",")
+    if origin.strip()
+]
 
-# Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=configured_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -61,6 +65,10 @@ def read_root():
         "region": "Rural Punjab",
         "version": "1.0.0"
     }
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 
 @app.post("/api/triage/evaluate", response_model=TriageResponse)
 def evaluate_symptoms(request: TriageRequest):

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PharmacySearch } from '../components/pharmacy/PharmacySearch';
 import { InventoryList } from '../components/pharmacy/InventoryList';
 import { PharmacyMap } from '../components/maps/PharmacyMap';
 import { Modal } from '../components/common/Modal';
 import { Button } from '../components/common/Button';
 import { PharmacyItem } from '../types';
-import { CheckCircle2, ShoppingBag, Pill, Filter, HelpCircle } from 'lucide-react';
+import { CheckCircle2, ShoppingBag, Pill, Filter, HelpCircle, MapPinned } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const mockPharmacies: PharmacyItem[] = [
@@ -65,6 +66,7 @@ const mockPharmacies: PharmacyItem[] = [
 
 export const PharmacyPage: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [stockFilter, setStockFilter] = useState<'all' | 'in_stock' | 'low_stock' | 'out_of_stock'>('all');
   const [selectedItem, setSelectedItem] = useState<PharmacyItem | null>(null);
@@ -91,14 +93,24 @@ export const PharmacyPage: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
-      <div className="text-center space-y-1">
-        <h1 className="text-2xl font-bold font-serif text-olive-dark flex items-center justify-center gap-2">
-          <Pill className="w-7 h-7 text-olive" />
-          {t('pharmacy.title')}
-        </h1>
-        <p className="text-xs font-serif text-charcoal-light">
-          Real-time stock checking across Jan Aushadhi Kendras & private outlets in Rural Region
-        </p>
+      <div className="flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
+        <div className="space-y-1">
+          <h1 className="flex items-center justify-center gap-2 text-2xl font-bold font-serif text-olive-dark sm:justify-start">
+            <Pill className="h-7 w-7 text-olive" />
+            {t('pharmacy.title')}
+          </h1>
+          <p className="text-xs font-serif text-charcoal-light">
+            Real-time stock checking across Jan Aushadhi Kendras & private outlets in Rural Region
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          icon={<MapPinned className="h-4 w-4" />}
+          onClick={() => navigate('/healthcare-map')}
+        >
+          Healthcare Map
+        </Button>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center gap-3">

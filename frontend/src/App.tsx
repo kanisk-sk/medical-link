@@ -20,6 +20,7 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { HelpPage } from './pages/HelpPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AiAssistantWidget } from './components/assistant/AiAssistantWidget';
+import { HealthcareMapPage } from './pages/HealthcareMapPage';
 
 export const App: React.FC = () => {
   const protectedPage = (element: React.ReactNode) => (
@@ -52,6 +53,7 @@ export const App: React.FC = () => {
         <Route path="/worker/dashboard" element={protectedPage(<AssistedIntake />)} />
 
         <Route path="/pharmacy/dashboard" element={protectedPage(<PharmacyPage />)} />
+        <Route path="/healthcare-map" element={protectedPage(<HealthcareMapPage />)} />
 
         <Route path="/admin/dashboard" element={protectedPage(<AdminDashboard />)} />
 
@@ -75,4 +77,3 @@ export const App: React.FC = () => {
 };
 
 export default App;
-

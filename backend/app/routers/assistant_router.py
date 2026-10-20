@@ -7,7 +7,12 @@ from fastapi.responses import StreamingResponse
 
 try:
     from app.config import settings
-    from app.security.jwt_auth import get_current_user, UserTokenData, create_access_token
+    from app.security.jwt_auth import (
+        get_current_user,
+        get_authenticated_user,
+        UserTokenData,
+        create_access_token,
+    )
     from app.schemas.assistant_schemas import (
         ChatRequestSchema,
         ChatSyncResponseSchema,
@@ -15,12 +20,24 @@ try:
         QuickPromptItem,
         TokenRequestSchema,
         TokenResponseSchema,
-        AssistantHealthSchema
+        AssistantHealthSchema,
+        ProfileUpsertSchema,
+        ConversationCreateSchema,
+        ChatMessageCreateSchema
     )
-    from app.services.groq_service import groq_service, check_emergency
+    from app.services.groq_service import GroqProviderError, groq_service, check_emergency
+    from app.services.supabase_service import (
+        SupabaseConfigurationError,
+        supabase_service,
+    )
 except ImportError:
     from ..config import settings
-    from ..security.jwt_auth import get_current_user, UserTokenData, create_access_token
+    from ..security.jwt_auth import (
+        get_current_user,
+        get_authenticated_user,
+        UserTokenData,
+        create_access_token,
+    )
     from ..schemas.assistant_schemas import (
         ChatRequestSchema,
         ChatSyncResponseSchema,
@@ -28,13 +45,107 @@ except ImportError:
         QuickPromptItem,
         TokenRequestSchema,
         TokenResponseSchema,
-        AssistantHealthSchema
+        AssistantHealthSchema,
+        ProfileUpsertSchema,
+        ConversationCreateSchema,
+        ChatMessageCreateSchema
     )
-    from ..services.groq_service import groq_service, check_emergency
+    from ..services.groq_service import GroqProviderError, groq_service, check_emergency
+    from ..services.supabase_service import (
+        SupabaseConfigurationError,
+        supabase_service,
+    )
 
 logger = logging.getLogger("sehatlink.assistant_router")
 
 router = APIRouter(prefix="/api/assistant", tags=["AI Assistant"])
+
+
+def _supabase_error(error: Exception) -> HTTPException:
+    logger.exception("Supabase persistence request failed")
+    if isinstance(error, SupabaseConfigurationError):
+        return HTTPException(status_code=503, detail=str(error))
+    return HTTPException(status_code=502, detail="Supabase persistence is temporarily unavailable.")
+
+
+@router.put("/profile")
+def upsert_profile(
+    request: ProfileUpsertSchema,
+    current_user: UserTokenData = Depends(get_authenticated_user),
+):
+    try:
+        return supabase_service.upsert_profile(
+            current_user.sub,
+            request.display_name or current_user.name or "Rural Citizen",
+            request.preferred_language,
+        )
+    except Exception as error:
+        raise _supabase_error(error) from error
+
+
+@router.get("/conversations")
+def list_chat_conversations(current_user: UserTokenData = Depends(get_authenticated_user)):
+    try:
+        return supabase_service.list_conversations(current_user.sub)
+    except Exception as error:
+        raise _supabase_error(error) from error
+
+
+@router.post("/conversations")
+def create_chat_conversation(
+    request: ConversationCreateSchema,
+    current_user: UserTokenData = Depends(get_authenticated_user),
+):
+    try:
+        supabase_service.upsert_profile(
+            current_user.sub,
+            current_user.name or "Rural Citizen",
+            request.preferred_language,
+        )
+        return supabase_service.create_conversation(
+            current_user.sub,
+            request.title,
+            request.preferred_language,
+        )
+    except Exception as error:
+        raise _supabase_error(error) from error
+
+
+@router.get("/conversations/{conversation_id}/messages")
+def list_chat_messages(
+    conversation_id: str,
+    current_user: UserTokenData = Depends(get_authenticated_user),
+):
+    try:
+        if not supabase_service.get_conversation(current_user.sub, conversation_id):
+            raise HTTPException(status_code=404, detail="Conversation not found.")
+        return supabase_service.get_messages(current_user.sub, conversation_id)
+    except HTTPException:
+        raise
+    except Exception as error:
+        raise _supabase_error(error) from error
+
+
+@router.post("/conversations/{conversation_id}/messages")
+def create_chat_message(
+    conversation_id: str,
+    request: ChatMessageCreateSchema,
+    current_user: UserTokenData = Depends(get_authenticated_user),
+):
+    try:
+        if not supabase_service.get_conversation(current_user.sub, conversation_id):
+            raise HTTPException(status_code=404, detail="Conversation not found.")
+        return supabase_service.add_message(
+            current_user.sub,
+            conversation_id,
+            request.role,
+            request.content,
+            request.language,
+        )
+    except HTTPException:
+        raise
+    except Exception as error:
+        raise _supabase_error(error) from error
 
 @router.get("/health", response_model=AssistantHealthSchema)
 def check_assistant_health():
@@ -112,7 +223,10 @@ async def chat_sync_endpoint(
     if not request.language:
         request.language = current_user.language
 
-    res = await groq_service.sync_chat_response(request)
+    try:
+        res = await groq_service.sync_chat_response(request)
+    except GroqProviderError as error:
+        raise HTTPException(status_code=error.status_code, detail=str(error)) from error
     
     assistant_msg = ChatMessageSchema(
         id=f"msg-{uuid.uuid4().hex[:8]}",

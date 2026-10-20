@@ -15,7 +15,14 @@ export const LanguageToggle: React.FC = () => {
 
   const languages: { code: Language; label: string }[] = [
     { code: 'en', label: 'English' },
+    { code: 'pa', label: 'ਪੰਜਾਬੀ' },
+    { code: 'hi', label: 'हिन्दी' },
     { code: 'ta', label: 'தமிழ்' },
+    { code: 'te', label: 'తెలుగు' },
+    { code: 'ml', label: 'മലയാളം' },
+    { code: 'kn', label: 'ಕನ್ನಡ' },
+    { code: 'bn', label: 'বাংলা' },
+    { code: 'mr', label: 'मराठी' },
   ];
 
   return (

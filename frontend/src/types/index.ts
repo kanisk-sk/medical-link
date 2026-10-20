@@ -2,7 +2,7 @@ export type SehatLinkRole = 'patient' | 'doctor' | 'health_worker' | 'pharmacist
 
 export type UserRole = SehatLinkRole;
 
-export type Language = 'en' | 'ta' | 'pa' | 'hi';
+export type Language = 'en' | 'ta' | 'pa' | 'hi' | 'te' | 'ml' | 'kn' | 'bn' | 'mr';
 
 export type Priority = 'HIGH' | 'MEDIUM' | 'LOW';
 
@@ -103,6 +103,29 @@ export interface PharmacyItem {
   pharmacyAddress: string;
   distanceKm: number;
   contactNumber: string;
+}
+
+export type HealthcareFacilityCategory = 'hospital' | 'clinic' | 'pharmacy' | 'laboratory' | 'emergency';
+
+export interface HealthcareFacility {
+  id: string;
+  name: string;
+  category: HealthcareFacilityCategory;
+  latitude: number;
+  longitude: number;
+  address: string;
+  phone?: string;
+  operating_hours?: string;
+  description?: string;
+  website?: string;
+  is_verified: boolean;
+  distanceKm?: number;
+}
+
+export interface LocationPoint {
+  latitude: number;
+  longitude: number;
+  label?: string;
 }
 
 export interface EmergencyCase {

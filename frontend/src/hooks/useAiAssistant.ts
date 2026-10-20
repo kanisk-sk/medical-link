@@ -4,7 +4,16 @@ import { useUser, useAuth } from '@clerk/react';
 import { useAuthStore } from '../store/authStore';
 import { AssistantMessage, QuickPrompt, ThemeMode, VitalsContext } from '../types/assistant';
 import { Language, SehatLinkRole } from '../types';
-import { streamAssistantChat, fetchQuickPrompts, fetchAssistantHealth } from '../services/assistantService';
+import {
+  streamAssistantChat,
+  fetchQuickPrompts,
+  fetchAssistantHealth,
+  fetchChatConversations,
+  fetchChatMessages,
+  createChatConversation,
+  persistChatMessage,
+  upsertAssistantProfile
+} from '../services/assistantService';
 
 const LOCAL_STORAGE_KEY = 'sehatlink_ai_assistant_history_v1';
 const THEME_STORAGE_KEY = 'sehatlink_ai_assistant_theme';
@@ -20,6 +29,7 @@ export function useAiAssistant() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
+  const [conversationId, setConversationId] = useState<string | null>(null);
   const [quickPrompts, setQuickPrompts] = useState<QuickPrompt[]>([]);
   const [inputText, setInputText] = useState<string>('');
   const [isOffline, setIsOffline] = useState<boolean>(!navigator.onLine);
@@ -98,6 +108,52 @@ export function useAiAssistant() {
     };
     setMessages([welcomeMsg]);
   }, [userLanguage]);
+
+  // Restore the most recently updated conversation for authenticated users.
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadCloudHistory = async () => {
+      if (!user?.id) return;
+
+      try {
+        const token = await getToken();
+        if (!token) return;
+
+        await upsertAssistantProfile(
+          token,
+          user.fullName || user.primaryEmailAddress?.emailAddress || 'Rural Citizen',
+          userLanguage
+        );
+        const conversations = await fetchChatConversations(token);
+        const latest = conversations[0];
+        if (!latest) return;
+
+        const persistedMessages = await fetchChatMessages(token, latest.id);
+        if (cancelled || persistedMessages.length === 0) return;
+
+        setConversationId(latest.id);
+        setMessages(
+          persistedMessages.map((message) => ({
+            id: message.id,
+            role: message.role,
+            content: message.content,
+            timestamp: new Date(message.created_at).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit'
+            })
+          }))
+        );
+      } catch (error) {
+        console.error('Failed to restore Supabase chat history:', error);
+      }
+    };
+
+    void loadCloudHistory();
+    return () => {
+      cancelled = true;
+    };
+  }, [getToken, user?.fullName, user?.id, user?.primaryEmailAddress?.emailAddress, userLanguage]);
 
   // Persist messages to localStorage when updated
   useEffect(() => {
@@ -241,12 +297,31 @@ export function useAiAssistant() {
     setIsStreaming(true);
 
     let token: string | null = null;
+    let activeConversationId = conversationId;
     try {
       token = await getToken();
     } catch (e) {
-      console.warn('Could not retrieve Clerk token, continuing with guest dev token:', e);
+      console.error('Could not retrieve Clerk token; chat persistence is unavailable:', e);
     }
 
+    if (token) {
+      try {
+        if (!activeConversationId) {
+          const conversation = await createChatConversation(
+            token,
+            text.slice(0, 80),
+            userLanguage
+          );
+          activeConversationId = conversation.id;
+          setConversationId(conversation.id);
+        }
+        await persistChatMessage(token, activeConversationId, 'user', text, userLanguage);
+      } catch (error) {
+        console.error('Failed to persist user chat message to Supabase:', error);
+      }
+    }
+
+    let assistantContent = '';
     await streamAssistantChat({
       messages: nextMessages,
       role: userRole,
@@ -255,6 +330,7 @@ export function useAiAssistant() {
       vitalsContext,
       authToken: token,
       onChunk: (chunk) => {
+        assistantContent += chunk;
         setMessages((prev) => {
           return prev.map((m) => {
             if (m.id === assistantMsgId) {
@@ -282,6 +358,17 @@ export function useAiAssistant() {
       },
       onDone: (info) => {
         setIsStreaming(false);
+        if (token && activeConversationId && assistantContent.trim()) {
+          void persistChatMessage(
+            token,
+            activeConversationId,
+            'assistant',
+            assistantContent,
+            userLanguage
+          ).catch((error) => {
+            console.error('Failed to persist assistant chat message to Supabase:', error);
+          });
+        }
         setMessages((prev) => {
           return prev.map((m) => {
             if (m.id === assistantMsgId) {
@@ -312,7 +399,16 @@ export function useAiAssistant() {
         });
       }
     });
-  }, [inputText, isStreaming, messages, userRole, userLanguage, location.pathname, getToken]);
+  }, [
+    inputText,
+    isStreaming,
+    messages,
+    conversationId,
+    userRole,
+    userLanguage,
+    location.pathname,
+    getToken
+  ]);
 
   const clearChat = useCallback(() => {
     stopSpeaking();
@@ -325,6 +421,7 @@ export function useAiAssistant() {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     setMessages([defaultWelcome]);
+    setConversationId(null);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   }, [userLanguage, stopSpeaking]);
 

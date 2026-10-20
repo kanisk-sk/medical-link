@@ -121,3 +121,16 @@ async def get_current_user(
         )
 
     return verify_token(credentials.credentials)
+
+
+async def get_authenticated_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer)
+) -> UserTokenData:
+    """Require a bearer token for persistence operations."""
+    if not credentials or not credentials.credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication is required for chat history.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return verify_token(credentials.credentials)
