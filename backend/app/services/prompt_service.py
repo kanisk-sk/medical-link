@@ -11,8 +11,10 @@ Key Operational Principles:
 2. MULTILINGUAL SUPREMACY: Respect the user's language preference. If the user writes or selects Punjabi (Gurmukhi), respond primarily in clear, empathetic Punjabi (with optional English medical terms in brackets if helpful). If Hindi, respond in Hindi. If English, respond in simple clear English.
 3. EMERGENCY PROTOCOL: If the query suggests life-threatening emergencies (e.g., severe crushing chest pain, difficulty breathing, sudden stroke paralysis, snake bite, severe unyielding bleeding, high fever with seizure in children), IMMEDIATELY warn the user to call 108 Emergency Service or press the red Emergency button in SehatLink.
 4. DOSAGE & SAFETY WARNING: Always advise users that prescription medicines require a certified doctor's consultation. Remind them to verify generic medicine names available at local Jan Aushadhi Kendras.
-5. NO SCI-FI/FUTURISTIC JARGON: Speak about health records, vitals, prescriptions, and offline syncing in grounded, practical terms.
-6. ROLE-AWARE GUIDANCE: Tailor depth based on whether the user is a Patient, ASHA Health Worker, Doctor, or Pharmacist.
+5. HEART HEALTH EDUCATION: For heart-health questions, explain risk factors, monitoring, lifestyle measures, and warning signs in plain language. Never diagnose from symptoms or suggest starting, stopping, or changing prescription medicine.
+6. FOLLOW-UP QUESTIONS: When details are needed, ask focused questions such as age group, duration, severity, measured vitals, existing conditions, and current medicines. Do not delay emergency guidance while asking.
+7. NO SCI-FI/FUTURISTIC JARGON: Speak about health records, vitals, prescriptions, and offline syncing in grounded, practical terms.
+8. ROLE-AWARE GUIDANCE: Tailor depth based on whether the user is a Patient, ASHA Health Worker, Doctor, or Pharmacist.
 """
 
 ROLE_SPECIFIC_INSTRUCTIONS: Dict[str, str] = {
@@ -69,14 +71,22 @@ def build_system_prompt(
     page_instruction = PAGE_SPECIFIC_INSTRUCTIONS.get(current_page, "") if current_page else ""
 
     lang_instruction = ""
-    if language == "ta":
-        lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, polite Tamil (தமிழ்)."
-    elif language == "pa":
-        lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, polite Punjabi (ਪੰਜਾਬੀ)."
-    elif language == "hi":
-        lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, polite Hindi (हिंदी)."
-    else:
-        lang_instruction = "LANGUAGE REQUIREMENT: Respond in clear, accessible English."
+    language_names = {
+        "en": "English",
+        "pa": "Punjabi (ਪੰਜਾਬੀ)",
+        "hi": "Hindi (हिंदी)",
+        "ta": "Tamil (தமிழ்)",
+        "te": "Telugu (తెలుగు)",
+        "ml": "Malayalam (മലയാളം)",
+        "kn": "Kannada (ಕನ್ನಡ)",
+        "bn": "Bengali (বাংলা)",
+        "mr": "Marathi (मराठी)",
+    }
+    selected_language = language_names.get(language, "English")
+    lang_instruction = (
+        f"LANGUAGE REQUIREMENT: Respond in clear, polite {selected_language}. "
+        "Keep necessary medical terms in English in parentheses when that improves safety."
+    )
 
     vitals_str = ""
     if vitals_context:

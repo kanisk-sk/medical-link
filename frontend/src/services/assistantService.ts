@@ -1,7 +1,15 @@
 import { AssistantMessage, AssistantHealthStatus, QuickPrompt, VitalsContext } from '../types/assistant';
 import { Language, SehatLinkRole } from '../types';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE = (
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://127.0.0.1:8002' : '')
+).replace(/\/+$/, '');
+
+if (!API_BASE) {
+  throw new Error('Missing VITE_API_BASE_URL in the frontend environment.');
+}
 
 export async function fetchAssistantHealth(): Promise<AssistantHealthStatus> {
   try {
@@ -130,6 +138,102 @@ export interface StreamChatParams {
   onError?: (errMessage: string) => void;
 }
 
+export interface ChatConversation {
+  id: string;
+  title: string;
+  preferred_language: Language;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PersistedChatMessage {
+  id: string;
+  conversation_id: string;
+  user_id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  language: Language;
+  created_at: string;
+}
+
+async function assistantApiRequest<T>(
+  path: string,
+  authToken: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const response = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + authToken,
+      ...(options.headers || {})
+    }
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Assistant API returned HTTP ${response.status}: ${detail}`);
+  }
+
+  return response.json();
+}
+
+export function upsertAssistantProfile(
+  authToken: string,
+  displayName: string,
+  language: Language
+): Promise<void> {
+  return assistantApiRequest('/api/assistant/profile', authToken, {
+    method: 'PUT',
+    body: JSON.stringify({
+      display_name: displayName,
+      preferred_language: language
+    })
+  }).then(() => undefined);
+}
+
+export function fetchChatConversations(authToken: string): Promise<ChatConversation[]> {
+  return assistantApiRequest<ChatConversation[]>('/api/assistant/conversations', authToken);
+}
+
+export function createChatConversation(
+  authToken: string,
+  title: string,
+  language: Language
+): Promise<ChatConversation> {
+  return assistantApiRequest<ChatConversation>('/api/assistant/conversations', authToken, {
+    method: 'POST',
+    body: JSON.stringify({ title, preferred_language: language })
+  });
+}
+
+export function fetchChatMessages(
+  authToken: string,
+  conversationId: string
+): Promise<PersistedChatMessage[]> {
+  return assistantApiRequest<PersistedChatMessage[]>(
+    `/api/assistant/conversations/${encodeURIComponent(conversationId)}/messages`,
+    authToken
+  );
+}
+
+export function persistChatMessage(
+  authToken: string,
+  conversationId: string,
+  role: 'user' | 'assistant',
+  content: string,
+  language: Language
+): Promise<PersistedChatMessage> {
+  return assistantApiRequest<PersistedChatMessage>(
+    `/api/assistant/conversations/${encodeURIComponent(conversationId)}/messages`,
+    authToken,
+    {
+      method: 'POST',
+      body: JSON.stringify({ role, content, language })
+    }
+  );
+}
+
 export async function streamAssistantChat(params: StreamChatParams): Promise<void> {
   const {
     messages,
@@ -163,14 +267,19 @@ export async function streamAssistantChat(params: StreamChatParams): Promise<voi
   };
 
   if (authToken) {
-    headers['Authorization'] = `Bearer ${authToken}`;
+    headers['Authorization'] = 'Bearer ' + authToken;
   }
+
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 45_000);
+  let completed = false;
 
   try {
     const response = await fetch(`${API_BASE}/api/assistant/chat`, {
       method: 'POST',
       headers,
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: controller.signal
     });
 
     if (!response.ok) {
@@ -186,43 +295,53 @@ export async function streamAssistantChat(params: StreamChatParams): Promise<voi
     const decoder = new TextDecoder('utf-8');
     let buffer = '';
 
-    while (true) {
+    const processEvent = (rawEvent: string) => {
+      const dataLine = rawEvent
+        .split('\n')
+        .find((line) => line.startsWith('data:'));
+      if (!dataLine) return;
+
+      const jsonStr = dataLine.slice(5).trim();
+      const data = JSON.parse(jsonStr);
+
+      if (data.type === 'emergency_flag' && data.emergency_detected) {
+        onEmergencyDetected?.(data.notice);
+      }
+      if (data.error) {
+        throw new Error(data.error_message || 'The AI provider could not complete the request.');
+      }
+      if (data.content) onChunk(data.content);
+      if (data.done) {
+        completed = true;
+        onDone?.({
+          model: data.model,
+          executionTimeMs: data.execution_time_ms
+        });
+      }
+    };
+
+    while (!completed) {
       const { done, value } = await reader.read();
-      if (done) break;
+      if (done) {
+        if (buffer.trim()) processEvent(buffer);
+        break;
+      }
 
       buffer += decoder.decode(value, { stream: true });
       const lines = buffer.split('\n\n');
       buffer = lines.pop() || ''; // keep remaining partial line in buffer
 
       for (const line of lines) {
-        const trimmed = line.trim();
-        if (trimmed.startsWith('data: ')) {
-          const jsonStr = trimmed.substring(6);
-          try {
-            const data = JSON.parse(jsonStr);
-
-            if (data.type === 'emergency_flag' && data.emergency_detected) {
-              onEmergencyDetected?.(data.notice);
-            }
-
-            if (data.content) {
-              onChunk(data.content);
-            }
-
-            if (data.done) {
-              onDone?.({
-                model: data.model,
-                executionTimeMs: data.execution_time_ms
-              });
-            }
-          } catch (e) {
-            console.warn('Error parsing SSE json chunk:', e, jsonStr);
-          }
-        }
+        processEvent(line.trim());
       }
     }
   } catch (error: any) {
     console.error('Stream Assistant Chat Error:', error);
-    onError?.(error.message || 'Failed to communicate with AI Assistant backend.');
+    const message = error?.name === 'AbortError'
+      ? 'The AI response timed out. Please try again.'
+      : error.message || 'Failed to communicate with AI Assistant backend.';
+    if (!completed) onError?.(message);
+  } finally {
+    window.clearTimeout(timeoutId);
   }
 }

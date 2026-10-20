@@ -3,10 +3,125 @@
 -- ============================================================
 
 -- 1. ENUMS
-CREATE TYPE user_role AS ENUM ('patient', 'asha', 'doctor', 'pharmacist', 'admin');
-CREATE TYPE priority_enum AS ENUM ('HIGH', 'MEDIUM', 'LOW');
+DO $$ BEGIN
+    CREATE TYPE user_role AS ENUM ('patient', 'asha', 'doctor', 'pharmacist', 'admin');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END $$;
 
--- 2. USERS TABLE (LOGIN & AUTH)
+DO $$ BEGIN
+    CREATE TYPE priority_enum AS ENUM ('HIGH', 'MEDIUM', 'LOW');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END $$;
+
+-- 2. HEALTHCARE FACILITIES (PUBLIC DIRECTORY)
+CREATE TABLE IF NOT EXISTS healthcare_facilities (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    category TEXT NOT NULL CHECK (category IN ('hospital', 'clinic', 'pharmacy', 'laboratory', 'emergency')),
+    latitude DOUBLE PRECISION NOT NULL CHECK (latitude BETWEEN -90 AND 90),
+    longitude DOUBLE PRECISION NOT NULL CHECK (longitude BETWEEN -180 AND 180),
+    address TEXT NOT NULL,
+    phone TEXT,
+    operating_hours TEXT,
+    description TEXT,
+    website TEXT,
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS healthcare_facilities_category_idx
+    ON healthcare_facilities (category);
+
+CREATE INDEX IF NOT EXISTS healthcare_facilities_coordinates_idx
+    ON healthcare_facilities (latitude, longitude);
+
+ALTER TABLE healthcare_facilities ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Healthcare facilities are publicly readable" ON healthcare_facilities;
+CREATE POLICY "Healthcare facilities are publicly readable"
+    ON healthcare_facilities FOR SELECT
+    TO anon, authenticated
+    USING (true);
+
+-- 2. PROFILES TABLE
+-- The application currently uses Clerk for authentication. id stores the
+-- external Clerk subject; auth_user_id supports a future Supabase Auth link.
+CREATE TABLE IF NOT EXISTS profiles (
+    id TEXT PRIMARY KEY,
+    auth_user_id UUID UNIQUE REFERENCES auth.users(id) ON DELETE SET NULL,
+    display_name TEXT NOT NULL,
+    preferred_language TEXT NOT NULL DEFAULT 'en',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS profiles_auth_user_id_idx ON profiles (auth_user_id);
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Profile and chat writes are made by the backend using the server-only secret key.
+-- No public policies are granted because Clerk tokens are not Supabase JWTs.
+
+-- 3. CHAT CONVERSATIONS
+CREATE TABLE IF NOT EXISTS chat_conversations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+    title TEXT NOT NULL DEFAULT 'New conversation',
+    preferred_language TEXT NOT NULL DEFAULT 'en',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS chat_conversations_user_updated_idx
+    ON chat_conversations (user_id, updated_at DESC);
+ALTER TABLE chat_conversations ENABLE ROW LEVEL SECURITY;
+
+-- 4. CHAT MESSAGES
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    conversation_id UUID NOT NULL REFERENCES chat_conversations(id) ON DELETE CASCADE,
+    user_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+    role TEXT NOT NULL CHECK (role IN ('user', 'assistant')),
+    content TEXT NOT NULL CHECK (char_length(content) > 0),
+    language TEXT NOT NULL DEFAULT 'en',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS chat_messages_conversation_created_idx
+    ON chat_messages (conversation_id, created_at);
+CREATE INDEX IF NOT EXISTS chat_messages_user_created_idx
+    ON chat_messages (user_id, created_at DESC);
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+
+CREATE OR REPLACE FUNCTION update_chat_conversation_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE chat_conversations SET updated_at = NOW() WHERE id = NEW.conversation_id;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS chat_messages_update_conversation_timestamp ON chat_messages;
+CREATE TRIGGER chat_messages_update_conversation_timestamp
+    AFTER INSERT ON chat_messages
+    FOR EACH ROW EXECUTE FUNCTION update_chat_conversation_timestamp();
+
+CREATE OR REPLACE FUNCTION update_profile_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS profiles_set_updated_at ON profiles;
+CREATE TRIGGER profiles_set_updated_at
+    BEFORE UPDATE ON profiles
+    FOR EACH ROW EXECUTE FUNCTION update_profile_timestamp();
+
+-- 5. USERS TABLE (LOGIN & AUTH LEGACY DOMAIN DATA)
 CREATE TABLE IF NOT EXISTS users (
     id VARCHAR PRIMARY KEY,
     email VARCHAR UNIQUE,
@@ -20,7 +135,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. PATIENTS TABLE (PATIENT DETAILS & ABHA HEALTHCARDS)
+-- 6. PATIENTS TABLE (PATIENT DETAILS & ABHA HEALTHCARDS)
 CREATE TABLE IF NOT EXISTS patients (
     id VARCHAR PRIMARY KEY,
     user_id VARCHAR REFERENCES users(id) ON DELETE SET NULL,
@@ -37,7 +152,7 @@ CREATE TABLE IF NOT EXISTS patients (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. VITALS RECORDS TABLE (ASHA WORKER INTAKES)
+-- 7. VITALS RECORDS TABLE (ASHA WORKER INTAKES)
 CREATE TABLE IF NOT EXISTS vitals (
     id VARCHAR PRIMARY KEY,
     patient_id VARCHAR REFERENCES patients(id) ON DELETE CASCADE,
@@ -50,7 +165,7 @@ CREATE TABLE IF NOT EXISTS vitals (
     recorded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. CONSULTATIONS TABLE (DOCTOR APPOINTMENTS)
+-- 8. CONSULTATIONS TABLE (DOCTOR APPOINTMENTS)
 CREATE TABLE IF NOT EXISTS consultations (
     id VARCHAR PRIMARY KEY,
     patient_id VARCHAR REFERENCES patients(id) ON DELETE CASCADE,
@@ -64,7 +179,7 @@ CREATE TABLE IF NOT EXISTS consultations (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 6. PRESCRIPTIONS TABLE (DIGITAL PRESCRIPTIONS)
+-- 9. PRESCRIPTIONS TABLE (DIGITAL PRESCRIPTIONS)
 CREATE TABLE IF NOT EXISTS prescriptions (
     id VARCHAR PRIMARY KEY,
     consultation_id VARCHAR REFERENCES consultations(id) ON DELETE SET NULL,
@@ -79,7 +194,7 @@ CREATE TABLE IF NOT EXISTS prescriptions (
     issued_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 7. PHARMACY INVENTORY TABLE (JAN AUSHADHI KENDRA STOCK)
+-- 10. PHARMACY INVENTORY TABLE (JAN AUSHADHI KENDRA STOCK)
 CREATE TABLE IF NOT EXISTS pharmacy_inventory (
     id VARCHAR PRIMARY KEY,
     medicine_name VARCHAR NOT NULL,
@@ -93,7 +208,7 @@ CREATE TABLE IF NOT EXISTS pharmacy_inventory (
     contact_number VARCHAR
 );
 
--- 8. EMERGENCY ALERTS TABLE (108 SOS DISPATCH LOGS)
+-- 11. EMERGENCY ALERTS TABLE (108 SOS DISPATCH LOGS)
 CREATE TABLE IF NOT EXISTS emergency_alerts (
     id VARCHAR PRIMARY KEY,
     patient_id VARCHAR REFERENCES patients(id) ON DELETE SET NULL,

@@ -89,6 +89,21 @@ You can explore all features—speak symptoms, open the QR card, chat with the A
 
 ## 🛠️ How to Run the Project (For Evaluators)
 
+### Supabase configuration
+
+The frontend uses the Supabase publishable key only for public directory reads. Clerk
+remains the authentication provider, while the FastAPI backend uses the Supabase
+secret key for authenticated profile and AI chat history persistence.
+
+1. Run [backend/supabase_schema.sql](./backend/supabase_schema.sql) in the Supabase SQL editor.
+2. Copy `backend/.env.example` to `backend/.env` and set `SUPABASE_URL`,
+   `SUPABASE_SECRET_KEY`, `GROQ_API_KEY`, and a random `SECRET_KEY`.
+3. Copy `frontend/.env.example` to `frontend/.env.local` and set
+   `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`,
+   `VITE_CLERK_PUBLISHABLE_KEY`, and `VITE_API_BASE_URL`.
+4. Never put `SUPABASE_SECRET_KEY` or any other server credential in a
+   `VITE_*` variable.
+
 ### 1. Run the Backend
 ```bash
 cd backend
@@ -103,6 +118,24 @@ cd frontend
 npm install
 npm run dev
 ```
+
+## Production deployment
+
+The frontend and backend are deployed as separate services:
+
+- **Vercel:** set the project Root Directory to `frontend`, Framework Preset to
+  `Vite`, Build Command to `npm run build`, and Output Directory to `dist`.
+  Set `VITE_API_BASE_URL` to the public Render API URL without a trailing slash,
+  plus the frontend Supabase and Clerk publishable variables shown in
+  [frontend/.env.example](./frontend/.env.example).
+- **Render:** set the service Root Directory to `backend`, Build Command to
+  `pip install -r requirements.txt`, and Start Command to
+  `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Set the backend variables
+  in [backend/.env.example](./backend/.env.example), including
+  `CORS_ORIGINS=https://your-vercel-domain.vercel.app`.
+- Configure Supabase by running [backend/supabase_schema.sql](./backend/supabase_schema.sql)
+  once in the Supabase SQL editor. Keep the backend secret key and Groq key in
+  Render only; only the Supabase publishable key belongs in Vercel.
 
 ---
 

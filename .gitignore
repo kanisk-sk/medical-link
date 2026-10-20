@@ -4,6 +4,11 @@
 .env.development.local
 .env.test.local
 .env.production.local
+**/.env
+**/.env.local
+**/.env.*.local
+!.env.example
+!**/.env.example
 backend/.env
 frontend/.env
 

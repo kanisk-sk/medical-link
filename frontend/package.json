@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@clerk/react": "^6.13.1",
+    "@supabase/supabase-js": "^2.117.3",
     "clsx": "^2.1.0",
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.7",
@@ -24,6 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.22.3",
     "tailwind-merge": "^2.2.1",
     "zustand": "^4.5.2"

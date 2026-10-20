@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Literal
 from pydantic import BaseModel, Field
 
 class ChatMessageSchema(BaseModel):
@@ -18,7 +18,10 @@ class ChatRequestSchema(BaseModel):
     messages: List[ChatMessageSchema] = Field(..., description="Conversation history")
     user_role: Optional[str] = Field("patient", description="User role: patient, health_worker, doctor, pharmacist, admin")
     current_page: Optional[str] = Field(None, description="Current router path in SehatLink frontend")
-    language: Optional[str] = Field("pa", description="Preferred language code: pa (Punjabi), hi (Hindi), en (English)")
+    language: Optional[Literal["en", "pa", "hi", "ta", "te", "ml", "kn", "bn", "mr"]] = Field(
+        "pa",
+        description="Preferred language code: en, pa, hi, ta, te, ml, kn, bn, or mr"
+    )
     stream: Optional[bool] = Field(True, description="Enable Server-Sent Events streaming response")
     vitals_context: Optional[VitalsContextSchema] = Field(None, description="Optional vitals or patient triage snapshot")
 
@@ -62,3 +65,19 @@ class AssistantHealthSchema(BaseModel):
     model: str
     app_name: str
     environment: str
+
+
+class ProfileUpsertSchema(BaseModel):
+    display_name: str = "Rural Citizen"
+    preferred_language: str = "en"
+
+
+class ConversationCreateSchema(BaseModel):
+    title: str = "New conversation"
+    preferred_language: str = "en"
+
+
+class ChatMessageCreateSchema(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(..., min_length=1, max_length=20000)
+    language: str = "en"
